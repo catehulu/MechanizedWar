@@ -1,6 +1,5 @@
 #include "Board.h"
-
-
+#include "resource.h"
 
 Board::Board(wxFrame *parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition,
@@ -12,9 +11,15 @@ Board::Board(wxFrame *parent)
 	timer = new wxTimer(this, 1);
 	SetBackgroundColour(wxColour(*wxWHITE));
 	map = new Map(0, 600, 1024, 15);
-	tank1 = new Tank(5,590);
-	tank2 = new Tank(500,590);
+	wxImageHandler* pngload = new wxPNGHandler();
+	wxImage::AddHandler(pngload);
+	wxImage gambar = wxBitmap(wxBITMAP_PNG(#101)).ConvertToImage();
+	gambar.Rescale(108, 34);
+	tank1 = new Tank(5,570,gambar);
+	tank2 = new Tank(500,570,gambar.Mirror());
+	
 	timer->Start(1000);
+
 
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
@@ -24,6 +29,7 @@ Board::Board(wxFrame *parent)
 void Board::OnPaint(wxPaintEvent & event)
 {
 	wxPaintDC pdc(this);
+	//if (tankpic != NULL) pdc.DrawBitmap(*tankpic, wxPoint(100, 100), true); //coba gambar tank aja
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
 	this->map->Draw(pdc,counter);
@@ -96,4 +102,5 @@ Board::~Board()
 	delete tank1;
 	delete tank2;
 	delete map;
+	delete tankpic;
 }

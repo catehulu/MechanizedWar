@@ -19,5 +19,6 @@ private:
 	int turn;
 	wxStatusBar *m_stsbar;
 	int counter;
+	wxBitmap* tankpic = NULL;
 };
 
