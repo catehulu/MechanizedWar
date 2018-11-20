@@ -36,7 +36,7 @@
     <ResourceCompile Include="FP.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="D:\Tugas\Smt3\PBO\Desain\tankpertamagede.png" />
+    <Image Include="..\assets\tankpertamagede.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

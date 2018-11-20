@@ -32,7 +32,7 @@ void Board::OnPaint(wxPaintEvent & event)
 	//if (tankpic != NULL) pdc.DrawBitmap(*tankpic, wxPoint(100, 100), true); //coba gambar tank aja
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
-	this->map->Draw(pdc,counter);
+	this->map->Draw(pdc,counter++);
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
@@ -76,7 +76,7 @@ void Board::OnTimer(wxTimerEvent & event)
 		turn *= -1;
 		counter = 0;
 	}
-	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
+	wxMessageOutputDebug().Printf("wxTimer event %d.", counter);
 	Refresh();
 
 }
