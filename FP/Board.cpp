@@ -16,9 +16,9 @@ Board::Board(wxFrame *parent)
 	tank2 = new Tank(500,590);
 	timer->Start(1000);
 
-	Connect(wxEVT_PAINT, wxPaintEventHandler(Board::OnPaint));
-	Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(Board::OnKeyDown));
-	Connect(wxEVT_TIMER, wxCommandEventHandler(Board::OnTimer));
+	Bind(wxEVT_PAINT, &Board::OnPaint, this);
+	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
+	Bind(wxEVT_TIMER, &Board::OnTimer, this, 1);
 }
 
 void Board::OnPaint(wxPaintEvent & event)
@@ -63,7 +63,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 	}
 }
 
-void Board::OnTimer(wxCommandEvent & event)
+void Board::OnTimer(wxTimerEvent & event)
 {
 	if (counter == 11)
 	{

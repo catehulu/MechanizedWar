@@ -10,8 +10,7 @@ void Map::Draw(wxPaintDC &dc,int count)
 {
 	dc.SetBrush(wxBrush(wxColour(*wxRED)));
 	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
-	dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(this->width,
-		this->height));
+	dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(this->width, this->height));
 	wxFont font(40, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	wxString x;
 	x << count;

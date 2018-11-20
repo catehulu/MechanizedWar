@@ -8,7 +8,7 @@ public:
 	Board(wxFrame *parent);
 	void OnPaint(wxPaintEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
-	void OnTimer(wxCommandEvent& event);
+	void OnTimer(wxTimerEvent& event);
 	void Moving(Tank* tank, int direction);
 	~Board();
 private:
