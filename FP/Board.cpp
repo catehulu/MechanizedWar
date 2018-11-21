@@ -1,5 +1,8 @@
 #include "Board.h"
+#include "wx/dcbuffer.h"
 #include "resource.h"
+#define TIMER1_ID 12121
+#define TIMER2_ID 12212
 
 Board::Board(wxFrame *parent)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition,
@@ -8,7 +11,9 @@ Board::Board(wxFrame *parent)
 	counter = 0;
 	m_stsbar = parent->GetStatusBar();
 	turn = 1;
-	timer = new wxTimer(this, 1);
+	timer = new wxTimer(this, TIMER1_ID);
+	timer2 = new wxTimer(this, TIMER2_ID);
+	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 	SetBackgroundColour(wxColour(*wxWHITE));
 	map = new Map(0, 600, 1024, 15);
 	wxImageHandler* pngload = new wxPNGHandler();
@@ -19,20 +24,25 @@ Board::Board(wxFrame *parent)
 	tank2 = new Tank(500,570,gambar.Mirror());
 	
 	timer->Start(1000);
+	timer2->Start(1);
 
 
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
-	Bind(wxEVT_TIMER, &Board::OnTimer, this, 1);
+	Bind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
+	Bind(wxEVT_TIMER, &Board::OnTimeRender, this, TIMER2_ID);
 }
 
 void Board::OnPaint(wxPaintEvent & event)
 {
-	wxPaintDC pdc(this);
 	//if (tankpic != NULL) pdc.DrawBitmap(*tankpic, wxPoint(100, 100), true); //coba gambar tank aja
+	wxBufferedPaintDC pdc(this);
+	pdc.SetBrush(wxBrush(wxColor(*wxWHITE)));
+	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
-	this->map->Draw(pdc,counter++);
+	this->map->Draw(pdc,counter);
+	
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
@@ -76,9 +86,12 @@ void Board::OnTimer(wxTimerEvent & event)
 		turn *= -1;
 		counter = 0;
 	}
-	wxMessageOutputDebug().Printf("wxTimer event %d.", counter);
-	Refresh();
+	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
+}
 
+void Board::OnTimeRender(wxTimerEvent & event)
+{
+	Refresh(true);
 }
 
 void Board::Moving(Tank * tank, int direction)
@@ -90,7 +103,8 @@ void Board::Moving(Tank * tank, int direction)
 	else if (direction == 2) {
 		tank->Move(4, GetClientSize().GetWidth());
 	}
-	Refresh();
+	//this->Update();
+	//this->Refresh(true);
 }
 
 
@@ -99,6 +113,7 @@ Board::~Board()
 {
 	timer->Stop();
 	delete timer;
+	delete timer2;
 	delete tank1;
 	delete tank2;
 	delete map;

@@ -7,7 +7,7 @@ Tank::Tank(int x, int y, wxImage res)
 	SetImage(res);
 }
 
-void Tank::Draw(wxPaintDC & dc)
+void Tank::Draw(wxBufferedPaintDC & dc)
 {
 	/*dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
 	dc.SetPen(wxPen(wxColor(*wxBLUE), 1, wxPENSTYLE_SOLID));

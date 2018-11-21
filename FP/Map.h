@@ -1,5 +1,6 @@
 #pragma once
 #include <wx\dcclient.h>
+#include "wx\dcbuffer.h"
 class Map
 {
 private:
@@ -10,5 +11,5 @@ private:
 public:
 	Map();
 	Map(int x, int y, int width, int height);
-	void Draw(wxPaintDC &dc, int count);
+	void Draw(wxBufferedPaintDC &dc, int count);
 };

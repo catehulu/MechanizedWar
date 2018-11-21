@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "wx/dcbuffer.h"
 
 Map::Map()
 {
@@ -7,7 +8,7 @@ Map::Map(int x, int y, int width, int height)
 	: x(x), y(y), width(width), height(height)
 {
 }
-void Map::Draw(wxPaintDC &dc,int count)
+void Map::Draw(wxBufferedPaintDC &dc,int count)
 {
 	dc.SetBrush(wxBrush(wxColour(*wxRED)));
 	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
