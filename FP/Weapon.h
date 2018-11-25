@@ -16,6 +16,7 @@ public:
 	void setDmg(int dmg);
 	double cos(double x, double y);
 	double sin(double x, double y);
+	bool colisionCheck(int y, int t);
 	~Weapon();
 private:
 	int x;

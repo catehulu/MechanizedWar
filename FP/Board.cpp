@@ -42,14 +42,13 @@ void Board::OnPaint(wxPaintEvent & event)
 	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
-	this->tank1->getWeapon()->Draw(t, pdc); //draw bullets
+	if (tank1->getWeapon()->colisionCheck(600, t))
+		this->tank1->getWeapon()->Draw(t, pdc); //draw bullets
+	else
+		t = 1;
 	this->map->Draw(pdc,counter);
-	t++;//jadi tiap kali onpaint dipanggil dia nambah 1, untuk pengali di rumus x dan y //owalah sebagai waktu? coba jalanin raj
-	if (t == 101) //sementara 101 kali, kalau udah dibuat collision ntar ganti while
-	{
-		t = 1; 
-	}//aku gak boleh nge run debug-kamu nya raj, harusnya bisa sih
-	//aku push dlu aja, udah bikin branch baru aku
+	t++;
+	
 
 }
 

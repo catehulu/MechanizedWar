@@ -73,6 +73,18 @@ double Weapon::sin(double x, double y)
 	return y / side;
 }
 
+bool Weapon::colisionCheck(int y, int t)
+{
+	int tmp;
+	double y_changes;
+	y_changes = v * sin(30, 30) * t - (0.5 * t*t*this->g);
+	tmp = this->y - y_changes;
+	if (tmp > y)
+		return false;
+	else
+		return true;
+}
+
 
 Weapon::~Weapon()
 {
