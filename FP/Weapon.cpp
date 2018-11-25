@@ -37,6 +37,16 @@ int Weapon::getY()
 	return this->y;
 }
 
+void Weapon::setX(int x)
+{
+	this->x = x;
+}
+
+void Weapon::setY(int y)
+{
+	this->y = y;
+}
+
 int Weapon::getDmg()
 {
 	return this->damage;

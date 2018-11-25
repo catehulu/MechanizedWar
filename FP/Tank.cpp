@@ -54,3 +54,13 @@ Tank::~Tank()
 	delete tankpic;
 	delete weapon;
 }
+
+int Tank::getX()
+{
+	return this->x;
+}
+
+int Tank::getY()
+{
+	return this->y;
+}

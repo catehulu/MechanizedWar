@@ -10,6 +10,8 @@ public:
 	void Draw(int t,wxBufferedPaintDC &dc);
 	int getX();
 	int getY();
+	void setX(int x);
+	void setY(int y);
 	int getDmg();
 	void setV(int v);
 	int getV();

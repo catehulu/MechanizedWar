@@ -9,7 +9,6 @@ Board::Board(wxFrame *parent)
 		wxDefaultSize, wxBORDER_NONE)
 {
 	counter = 0;
-	m_stsbar = parent->GetStatusBar();
 	turn = 1;
 	t = 1;
 	timer = new wxTimer(this, TIMER1_ID);
@@ -42,18 +41,31 @@ void Board::OnPaint(wxPaintEvent & event)
 	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
-	if (tank1->getWeapon()->colisionCheck(600, t))
-		this->tank1->getWeapon()->Draw(t, pdc); //draw bullets
-	else
-		t = 1;
-	this->map->Draw(pdc,counter);
-	t++;
+	this->map->Draw(pdc,counter,shot);
+
+	if (shot == 1) {
+		wxMessageOutputDebug().Printf("----------shooting stats---------");
+		wxMessageOutputDebug().Printf("weapon Y : %d",tank1->getWeapon()->getY());
+		if (tank1->getWeapon()->colisionCheck(600, t)) {
+			this->tank1->getWeapon()->Draw(t, pdc); //draw bullets
+			t++;
+		}
+		else {
+			t = 0;
+			shot = 0;
+			counter = 0;
+			turn *= -1;
+			timer->Start(1000);
+		}
+	}
 	
 
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
 {
+	if (shot == 1)
+		return;
 	int keycode = event.GetKeyCode();
 	if (turn == -1) {
 		switch (keycode)
@@ -64,6 +76,8 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case WXK_RIGHT:
 			Moving(tank2, 2);
 			break;
+		case WXK_SPACE:
+			Shooting(tank2, 1);
 		default:
 			event.Skip();
 			break;
@@ -79,6 +93,8 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case WXK_RIGHT:
 			Moving(tank1, 2);
 			break;
+		case WXK_SPACE:
+			Shooting(tank1, 2);
 		default:
 			event.Skip();
 			break;
@@ -88,6 +104,8 @@ void Board::OnKeyDown(wxKeyEvent & event)
 
 void Board::OnTimer(wxTimerEvent & event)
 {
+	if (shot == 1)
+		counter = 0;
 	if (counter == 11)
 	{
 		turn *= -1;
@@ -116,11 +134,20 @@ void Board::Moving(Tank * tank, int direction)
 	//this->Refresh(true);
 }
 
+void Board::Shooting(Tank * tank, int direction)
+{
+	shot = 1;
+	tank->getWeapon()->setX(tank->getX());
+	tank->getWeapon()->setY(tank->getY());
+	timer->Stop();
+}
+
 
 
 Board::~Board()
 {
 	timer->Stop();
+	timer2->Stop();
 	delete timer;
 	delete timer2;
 	delete tank1;

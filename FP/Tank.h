@@ -14,6 +14,8 @@ public:
 	Weapon* getWeapon();
 	wxImage GetImage();
 	~Tank();
+	int getX();
+	int getY();
 private:
 	int x;
 	int y;
