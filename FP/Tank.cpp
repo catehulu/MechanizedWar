@@ -5,6 +5,7 @@ Tank::Tank(int x, int y, wxImage res)
 	:x(x),y(y)
 {
 	SetImage(res);
+	weapon = new Weapon(10, x, y);
 }
 
 void Tank::Draw(wxBufferedPaintDC & dc)
@@ -32,6 +33,16 @@ void Tank::SetImage(wxImage res)
 	this->tankpic = new wxBitmap(res);
 }
 
+void Tank::setWeapon(int vy, int x, int y)
+{
+}
+
+Weapon* Tank::getWeapon()
+{
+
+	return this->weapon;
+}
+
 
 wxImage Tank::GetImage()
 {
@@ -41,4 +52,5 @@ wxImage Tank::GetImage()
 Tank::~Tank()
 {
 	delete tankpic;
+	delete weapon;
 }

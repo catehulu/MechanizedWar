@@ -1,6 +1,7 @@
 #pragma once
 #include "Tank.h"
 #include "Map.h"
+#include "Weapon.h"
 #include <wx/wx.h>
 class Board : public wxPanel
 {
@@ -22,5 +23,6 @@ private:
 	wxStatusBar *m_stsbar;
 	int counter;
 	wxBitmap* tankpic = NULL;
+	int t;
 };
 

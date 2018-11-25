@@ -11,6 +11,7 @@ Board::Board(wxFrame *parent)
 	counter = 0;
 	m_stsbar = parent->GetStatusBar();
 	turn = 1;
+	t = 1;
 	timer = new wxTimer(this, TIMER1_ID);
 	timer2 = new wxTimer(this, TIMER2_ID);
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -41,8 +42,15 @@ void Board::OnPaint(wxPaintEvent & event)
 	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
 	this->tank1->Draw(pdc);
 	this->tank2->Draw(pdc);
+	this->tank1->getWeapon()->Draw(t, pdc); //draw bullets
 	this->map->Draw(pdc,counter);
-	
+	t++;//jadi tiap kali onpaint dipanggil dia nambah 1, untuk pengali di rumus x dan y //owalah sebagai waktu? coba jalanin raj
+	if (t == 101) //sementara 101 kali, kalau udah dibuat collision ntar ganti while
+	{
+		t = 1; 
+	}//aku gak boleh nge run debug-kamu nya raj, harusnya bisa sih
+	//aku push dlu aja, udah bikin branch baru aku
+
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
@@ -86,7 +94,9 @@ void Board::OnTimer(wxTimerEvent & event)
 		turn *= -1;
 		counter = 0;
 	}
+	wxMessageOutputDebug().Printf("----------board stats---------");
 	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
+	wxMessageOutputDebug().Printf("t event %d.", t);
 }
 
 void Board::OnTimeRender(wxTimerEvent & event)
