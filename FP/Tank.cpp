@@ -1,8 +1,8 @@
 #include "Tank.h"
 
 
-Tank::Tank(int x, int y, wxImage res)
-	:x(x),y(y)
+Tank::Tank(int x, int y, wxImage res, int direction)
+	:x(x), y(y), direction(direction)
 {
 	SetImage(res);
 	weapon = new Weapon(10, x, y);

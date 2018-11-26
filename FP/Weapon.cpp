@@ -5,16 +5,24 @@
 Weapon::Weapon(int v,int x,int y) :
 	v(v), x(x), y(y)
 {
+	xs = 30;
+	ys = 30;
 }
 
-void Weapon::Draw(int t, wxBufferedPaintDC &dc)
+void Weapon::Draw(int direction,int t, wxBufferedPaintDC &dc)
 {
 	int x;
 	int y;
 	double y_changes;
 	double x_changes;
-	y_changes = v * sin(30, 30) * t - (0.5 * t*t*this->g);
-	x_changes = v * cos(30, 30) * t;
+	if (direction == 2) {
+		y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
+		x_changes = v * cos(xs, ys) * t;
+	}
+	else {
+		y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
+		x_changes = v * cos(xs, ys) * t * -1;
+	}
 	x = this->x + x_changes;
 	y = this->y - y_changes;
 	dc.SetBrush(wxBrush(wxColour(*wxBLACK)));

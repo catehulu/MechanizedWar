@@ -2,6 +2,7 @@
 #include "Tank.h"
 #include "Map.h"
 #include "Weapon.h"
+#include <vector>
 #include <wx/wx.h>
 class Board : public wxPanel
 {
@@ -16,15 +17,15 @@ public:
 	~Board();
 
 private:
-	int shot = 0;
+	int shot;
 	wxTimer *timer;
 	wxTimer *timer2;
-	Tank *tank1;
-	Tank *tank2;
+	std::vector <Tank*> tanks;
 	Map *map;
 	int turn;
 	int counter;
 	wxBitmap* tankpic = NULL;
 	int t;
+	int stages;
 };
 

@@ -6,7 +6,7 @@
 class Tank
 {
 public:
-	Tank(int x,int y, wxImage res);
+	Tank(int x,int y, wxImage res,int direction);
 	void Draw(wxBufferedPaintDC &dc);
 	void Move(int amount, int maxX);
 	void SetImage(wxImage res);
@@ -16,6 +16,7 @@ public:
 	~Tank();
 	int getX();
 	int getY();
+	int direction; //1 untuk kekiri 2 untuk kekanan,kemungkinan diganti jadi 1 dan -1 karena rencana inisialisasi tank kiri dulu baru kanan
 private:
 	int x;
 	int y;
