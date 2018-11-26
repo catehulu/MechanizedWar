@@ -50,11 +50,11 @@ void Board::OnPaint(wxPaintEvent & event)
 	for (int i = 0; i < tanks.size(); i++) {
 		this->tanks[i]->Draw(pdc);
 	}
-	this->map->Draw(pdc,counter,shot);
+	this->map->Draw(pdc,counter,stages);
 	//menggambar peluru jika ada kondisi menembak
-	if (shot == 1) {
-		wxMessageOutputDebug().Printf("----------shooting stats---------");
-		wxMessageOutputDebug().Printf("weapon Y : %d",tanks[turn]->getWeapon()->getY());
+	if (stages == 3) {
+		/*wxMessageOutputDebug().Printf("----------Aiming stats---------");
+		wxMessageOutputDebug().Printf("weapon Y : %d",tanks[turn]->getWeapon()->getY());*/
 		if (tanks[turn]->getWeapon()->colisionCheck(600, t)) {
 			this->tanks[turn]->getWeapon()->Draw(tanks[turn]->direction,t, pdc); //draw bullets
 			t++;
@@ -62,7 +62,7 @@ void Board::OnPaint(wxPaintEvent & event)
 		else {
 		//inisialisasi setelah proses menembak selesai
 			t = 0;
-			shot = 0;
+			stages = 1;
 			counter = 0;
 			turn++;
 			timer->Start(1000);
@@ -76,10 +76,10 @@ void Board::OnPaint(wxPaintEvent & event)
 
 void Board::OnKeyDown(wxKeyEvent & event)
 {
-	if (shot == 1)
-		return;
 	int keycode = event.GetKeyCode();
-	switch (keycode)
+	if (stages == 1) { //bagian bergerak,tekan spasi pindah stages
+		wxMessageOutputDebug().Printf("Move");
+		switch (keycode)
 		{
 		case WXK_LEFT:
 			Moving(tanks[turn], 1);
@@ -88,21 +88,64 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			Moving(tanks[turn], 2);
 			break;
 		case WXK_SPACE:
-			Shooting(tanks[turn], tanks[turn]->direction);
+			stages++;
+			Aiming(tanks[turn], tanks[turn]->direction);
 			break;
 		default:
 			event.Skip();
 			break;
 		}
+	}
+	else if (stages == 2) {//bagian aiming, kiri kanan velocity, atas bawah derajat
+		wxMessageOutputDebug().Printf("OnKeyShoot");
+		int xs = 0;
+		int ys = 0;
+		int v = 0;
+		v = tanks[turn]->getWeapon()->getV();
+		xs = tanks[turn]->getWeapon()->getXS();
+		ys = tanks[turn]->getWeapon()->getYS();
+		int keycode = event.GetKeyCode();
+		switch (keycode)
+		{
+		case WXK_UP:
+			ys += 5;
+			tanks[turn]->getWeapon()->setYS(ys);
+			break;
+		case WXK_DOWN:
+			ys -= 5;
+			if (ys < 0)
+				ys = 0;
+			tanks[turn]->getWeapon()->setYS(ys);
+			break;
+		case WXK_LEFT:
+			v -= 10;
+			if (v < 0)
+				v = 0;
+			tanks[turn]->getWeapon()->setV(v);
+			break;
+		case WXK_RIGHT:
+			v += 10;
+			tanks[turn]->getWeapon()->setV(v);
+			break;
+		case WXK_SPACE:
+			stages++;
+			break;
+		default:
+			event.Skip();
+			break;
+		}
+	}
 }
-
 void Board::OnTimer(wxTimerEvent & event)
 {
-	if (shot == 1)
+	if (stages == 3) {
 		counter = 0;
-	if (counter == 11)
+		timer->Stop();
+	}
+	if (counter == 10)
 	{
-		turn ++;
+		turn++;
+		stages = 1;
 		counter = 0;
 		if (turn == tanks.size())
 			turn = 0;
@@ -110,6 +153,7 @@ void Board::OnTimer(wxTimerEvent & event)
 	wxMessageOutputDebug().Printf("----------board stats---------");
 	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
 	wxMessageOutputDebug().Printf("t event %d.", t);
+	wxMessageOutputDebug().Printf("stages event %d.", stages);
 }
 
 void Board::OnTimeRender(wxTimerEvent & event)
@@ -119,7 +163,7 @@ void Board::OnTimeRender(wxTimerEvent & event)
 
 void Board::Moving(Tank * tank, int direction)
 {
-	wxMessageOutputDebug().Printf("Move Initiated\n");
+	//wxMessageOutputDebug().Printf("Move Initiated\n");
 	if (direction == 1) {
 		tank->Move(-4, GetClientSize().GetWidth());
 	}
@@ -130,7 +174,7 @@ void Board::Moving(Tank * tank, int direction)
 	//this->Refresh(true);
 }
 
-void Board::Shooting(Tank * tank, int direction)
+void Board::Aiming(Tank * tank, int direction)
 {
 	shot = 1;
 	if (direction == 1) {
@@ -141,7 +185,6 @@ void Board::Shooting(Tank * tank, int direction)
 		tank->getWeapon()->setX(tank->getX() + 80);
 		tank->getWeapon()->setY(tank->getY());
 	}
-	timer->Stop();
 }
 
 

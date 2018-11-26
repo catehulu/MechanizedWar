@@ -31,7 +31,7 @@ void Weapon::Draw(int direction,int t, wxBufferedPaintDC &dc)
 	wxMessageOutputDebug().Printf("----------bullet stats---------");
 	wxMessageOutputDebug().Printf("bullet x %d.\n", x);
 	wxMessageOutputDebug().Printf("bullet x changes %lf.", x_changes);
-	wxMessageOutputDebug().Printf("bullet y%d.\n", y);
+	wxMessageOutputDebug().Printf("bullet y %d.\n", y);
 	wxMessageOutputDebug().Printf("bullet y changes %lf.", y_changes);
 }
 
@@ -60,9 +60,29 @@ int Weapon::getDmg()
 	return this->damage;
 }
 
+int Weapon::getXS()
+{
+	return this->xs;
+}
+
+int Weapon::getYS()
+{
+	return this->ys;
+}
+
 void Weapon::setV(int v)
 {
 	this->v = v;
+}
+
+void Weapon::setXS(int xs)
+{
+	this->xs = xs;
+}
+
+void Weapon::setYS(int ys)
+{
+	this->ys = ys;
 }
 
 int Weapon::getV()
@@ -93,13 +113,13 @@ double Weapon::sin(double x, double y)
 
 bool Weapon::colisionCheck(int y, int t)
 {
-	int tmp;
+	int tmp1;
 	double y_changes;
-	y_changes = v * sin(30, 30) * t - (0.5 * t*t*this->g);
-	tmp = this->y - y_changes;
-	if (tmp > y)
+	y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
+	tmp1 = this->y - y_changes;
+	if (tmp1 > y)
 		return false;
-	else
+	else 
 		return true;
 }
 

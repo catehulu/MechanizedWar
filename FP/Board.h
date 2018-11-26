@@ -13,7 +13,7 @@ public:
 	void OnTimer(wxTimerEvent& event);
 	void OnTimeRender(wxTimerEvent& event);
 	void Moving(Tank* tank, int direction);
-	void Shooting(Tank* tank, int direction);
+	void Aiming(Tank* tank, int direction);
 	~Board();
 
 private:
@@ -26,6 +26,6 @@ private:
 	int counter;
 	wxBitmap* tankpic = NULL;
 	int t;
-	int stages;
+	int stages; //terdiri dari 3 stages, moving,aiming,shooting
 };
 

@@ -11,5 +11,5 @@ private:
 public:
 	Map();
 	Map(int x, int y, int width, int height);
-	void Draw(wxBufferedPaintDC &dc, int count,int shot);
+	void Draw(wxBufferedPaintDC &dc, int count,int stages);
 };

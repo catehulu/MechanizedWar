@@ -8,12 +8,12 @@ Map::Map(int x, int y, int width, int height)
 	: x(x), y(y), width(width), height(height)
 {
 }
-void Map::Draw(wxBufferedPaintDC &dc,int count,int shot)
+void Map::Draw(wxBufferedPaintDC &dc,int count,int stages)
 {
 	dc.SetBrush(wxBrush(wxColour(*wxRED)));
 	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
 	dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(this->width, this->height));
-	if (shot == 1)
+	if (stages == 3)
 		return;
 	wxFont font(40, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	wxString x;
