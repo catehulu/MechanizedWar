@@ -3,6 +3,12 @@
 // Used by FP.rc
 //
 #define IDB_PNG1                        101
+#define KNTGR_BODY						102
+#define KNTGR_GUN						103
+#define PRSHG_BODY						104
+#define PRSHG_GUN						105
+#define TIGER_BODY						106
+#define TIGER_GUN						107
 
 // Next default values for new objects
 // 

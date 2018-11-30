@@ -10,18 +10,20 @@ Board::Board(wxFrame *parent)
 {
 	counter = 0;
 	m_stsbar = parent->GetStatusBar();
-	turn = 1;
+	turn = -1;
 	timer = new wxTimer(this, TIMER1_ID);
 	timer2 = new wxTimer(this, TIMER2_ID);
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
-	SetBackgroundColour(wxColour(*wxWHITE));
+	SetBackgroundColour(wxColour(*wxBLACK));
 	map = new Map(0, 600, 1024, 15);
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
-	wxImage gambar = wxBitmap(wxBITMAP_PNG(#101)).ConvertToImage();
-	gambar.Rescale(108, 34);
-	tank1 = new Tank(5,570,gambar);
-	tank2 = new Tank(500,570,gambar.Mirror());
+	wxImage body = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
+	wxImage gun = wxBitmap(wxBITMAP_PNG(#107)).ConvertToImage();
+	body.Rescale(0.1*body.GetWidth(), 0.1*body.GetHeight());
+	gun.Rescale(0.1*gun.GetWidth(), 0.1*gun.GetHeight());
+	tank1 = new Tank(5,570-body.GetHeight(),body,gun);
+	tank2 = new Tank(500,570-body.GetHeight(),body,gun,false);
 	
 	timer->Start(1000);
 	timer2->Start(1);
@@ -57,6 +59,12 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case WXK_RIGHT:
 			Moving(tank2, 2);
 			break;
+		case WXK_UP:
+			tank2->Rotate(1);
+			break;
+		case WXK_DOWN:
+			tank2->Rotate(-1);
+			break;
 		default:
 			event.Skip();
 			break;
@@ -71,6 +79,12 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			break;
 		case WXK_RIGHT:
 			Moving(tank1, 2);
+			break;
+		case WXK_UP:
+			tank1->Rotate(1);
+			break;
+		case WXK_DOWN:
+			tank1->Rotate(-1);
 			break;
 		default:
 			event.Skip();
@@ -92,6 +106,8 @@ void Board::OnTimer(wxTimerEvent & event)
 void Board::OnTimeRender(wxTimerEvent & event)
 {
 	Refresh(true);
+	//tank1->Rotate(1);
+	//tank2->Rotate(1);
 }
 
 void Board::Moving(Tank * tank, int direction)
@@ -111,11 +127,15 @@ void Board::Moving(Tank * tank, int direction)
 
 Board::~Board()
 {
+	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
+	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
+	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
+	Unbind(wxEVT_TIMER, &Board::OnTimeRender, this, TIMER2_ID);
 	timer->Stop();
+	timer2->Stop();
 	delete timer;
 	delete timer2;
 	delete tank1;
 	delete tank2;
 	delete map;
-	delete tankpic;
 }

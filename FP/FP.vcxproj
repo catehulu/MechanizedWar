@@ -36,6 +36,8 @@
     <ResourceCompile Include="FP.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\assets\Konigstiger.png" />
+    <Image Include="..\assets\Konigstiger_gun.png" />
     <Image Include="..\assets\tankpertamagede.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

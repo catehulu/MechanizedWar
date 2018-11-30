@@ -57,5 +57,11 @@
     <Image Include="..\assets\tankpertamagede.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\assets\Konigstiger_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Konigstiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
