@@ -38,6 +38,16 @@
   <ItemGroup>
     <Image Include="..\assets\Konigstiger.png" />
     <Image Include="..\assets\Konigstiger_gun.png" />
+    <Image Include="..\assets\KV2.png" />
+    <Image Include="..\assets\KV2_gun.png" />
+    <Image Include="..\assets\M26_Pershing.png" />
+    <Image Include="..\assets\M26_Pershing_gun.png" />
+    <Image Include="..\assets\M4_Sherman.png" />
+    <Image Include="..\assets\M4_Sherman_gun.png" />
+    <Image Include="..\assets\Panther.png" />
+    <Image Include="..\assets\Panther_gun.png" />
+    <Image Include="..\assets\T34.png" />
+    <Image Include="..\assets\T34_gun.png" />
     <Image Include="..\assets\tankpertamagede.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -63,5 +63,35 @@
     <Image Include="..\assets\Konigstiger.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\assets\KV2_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M4_Sherman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M4_Sherman_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M26_Pershing.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M26_Pershing_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Panther.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Panther_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\T34.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\T34_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\KV2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
