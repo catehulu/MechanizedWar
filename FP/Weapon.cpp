@@ -3,13 +3,23 @@
 
 
 Weapon::Weapon(int v,int x,int y) :
-	v(v), x(x), y(y)
+	v(v), x(x), y(y), tx(x), ty(y)
 {
 	xs = 30;
 	ys = 30;
 }
 
-void Weapon::Draw(int direction,int t, wxBufferedPaintDC &dc)
+void Weapon::Draw(wxBufferedPaintDC &dc)
+{
+	dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
+	dc.SetPen(wxPen(wxColor(*wxBLUE), 1, wxPENSTYLE_SOLID));
+	dc.DrawCircle(wxPoint(tx,ty), wxCoord(10));
+	wxMessageOutputDebug().Printf("----------bullet stats---------");
+	wxMessageOutputDebug().Printf("bullet x %d.\n", x);
+	wxMessageOutputDebug().Printf("bullet y %d.\n", y);
+}
+
+void Weapon::Move(int direction, int t)
 {
 	int x;
 	int y;
@@ -23,16 +33,8 @@ void Weapon::Draw(int direction,int t, wxBufferedPaintDC &dc)
 		y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
 		x_changes = v * cos(xs, ys) * t * -1;
 	}
-	x = this->x + x_changes;
-	y = this->y - y_changes;
-	dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
-	dc.SetPen(wxPen(wxColor(*wxBLUE), 1, wxPENSTYLE_SOLID));
-	dc.DrawCircle(wxPoint(x,y), wxCoord(10));
-	wxMessageOutputDebug().Printf("----------bullet stats---------");
-	wxMessageOutputDebug().Printf("bullet x %d.\n", x);
-	wxMessageOutputDebug().Printf("bullet x changes %lf.", x_changes);
-	wxMessageOutputDebug().Printf("bullet y %d.\n", y);
-	wxMessageOutputDebug().Printf("bullet y changes %lf.", y_changes);
+	tx = this->x + x_changes;
+	ty = this->y - y_changes;
 }
 
 int Weapon::getX()
@@ -110,19 +112,6 @@ double Weapon::sin(double x, double y)
 
 	return y / side;
 }
-
-bool Weapon::colisionCheck(int y, int t)
-{
-	int tmp1;
-	double y_changes;
-	y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
-	tmp1 = this->y - y_changes;
-	if (tmp1 > y)
-		return false;
-	else 
-		return true;
-}
-
 
 Weapon::~Weapon()
 {

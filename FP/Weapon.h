@@ -7,7 +7,8 @@ class Weapon
 {
 public:
 	Weapon(int v,int x,int y);
-	void Draw(int direction,int t,wxBufferedPaintDC &dc);
+	void Draw(wxBufferedPaintDC &dc);
+	void Move(int direction,int t);
 	int getX();
 	int getY();
 	int getV();
@@ -22,8 +23,9 @@ public:
 	void setYS(int ys);
 	double cos(double x, double y);
 	double sin(double x, double y);
-	bool colisionCheck(int y, int t);
 	~Weapon();
+	int tx;//posisi x temporary senjata
+	int ty;//posisi y temporary senjata
 private:
 	int xs;//jarak x untuk mencari segitiga
 	int ys;//jarak y untuk mencari segitiga
@@ -31,7 +33,7 @@ private:
 	int y;//posisi y senjata
 	int size;
 	int v = 500;
-	int damage;
+	int damage = 11;
 	const double g = 0.11;//konstanta gravitasi
 };
 

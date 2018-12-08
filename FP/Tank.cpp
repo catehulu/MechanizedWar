@@ -12,10 +12,32 @@ void Tank::Draw(wxBufferedPaintDC & dc)
 {
 	/*dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
 	dc.SetPen(wxPen(wxColor(*wxBLUE), 1, wxPENSTYLE_SOLID));
-	dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(40,
-	10));*/
+	dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(width,
+		height));*/
 	dc.DrawBitmap(*this->tankpic,wxPoint(this->x,this->y),true);
-	
+	//health bar
+	dc.SetBrush(wxBrush(wxColour(*wxWHITE)));
+	dc.SetPen(wxPen(wxColor(*wxBLACK), 1, wxPENSTYLE_SOLID));
+	dc.DrawRectangle(wxPoint(this->x, this->y-20), wxSize(width,
+		13));
+	if (health/10 > 7)
+		dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
+	else if(health / 10 > 3)
+		dc.SetBrush(wxBrush(wxColour(*wxYELLOW)));
+	else
+		dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	//percobaan
+	double tmp;
+	tmp = width * health / 100;
+	dc.DrawRectangle(wxPoint(this->x, this->y - 20), wxSize((int)tmp,
+		13));
+	//gambar tulisan
+	wxFont font(8, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+	wxString x;
+	x << health;
+	dc.SetFont(font);
+	dc.SetTextForeground((wxColor(*wxBLACK)));
+	dc.DrawText(x, wxPoint(this->x+(this->width/2)-9, this->y - 20));
 }
 
 void Tank::Move(int amount, int maxX)
@@ -35,6 +57,41 @@ void Tank::SetImage(wxImage res)
 
 void Tank::setWeapon(int vy, int x, int y)
 {
+}
+
+bool Tank::checkCollision(Tank * tank)
+{
+	return false;
+}
+
+bool Tank::checkCollision(int x, int y)
+{
+	if (weapon->tx > x || weapon->tx < 0 || weapon->ty > y || weapon->ty < 0) {
+		weapon->tx = weapon->getX();
+		weapon->ty = weapon->getY();
+		return false;
+	}
+	else
+		return true;
+}
+
+bool Tank::tankArea(int x, int y)
+{
+	if ((x >= this->x && x <= this->x + this->width)
+		&& (y >= this->y && y <= this->y + this->width))
+		return true;
+	else
+		return false;
+}
+
+bool Tank::changeHealth(int x)
+{
+	health -= x;
+	if (health <= 0) {
+		health = 0;
+		return true;
+	}
+	else return false;
 }
 
 Weapon* Tank::getWeapon()

@@ -11,6 +11,10 @@ public:
 	void Move(int amount, int maxX);
 	void SetImage(wxImage res);
 	void setWeapon(int vy, int x, int y);
+	bool checkCollision(Tank* tank);
+	bool checkCollision(int x, int y);
+	bool tankArea(int x,int y);
+	bool changeHealth(int x);
 	Weapon* getWeapon();
 	wxImage GetImage();
 	~Tank();
@@ -20,6 +24,8 @@ public:
 private:
 	int x;
 	int y;
+	int height = 34,width = 108;
+	int health = 100;
 	wxBitmap* tankpic;
 	Weapon *weapon;
 };

@@ -20,15 +20,15 @@ Board::Board(wxFrame *parent)
 
 	//inisialisasi map
 	SetBackgroundColour(wxColour(*wxWHITE));
-	map = new Map(0, 600, 1024, 15);
+	map = new Map(0, 1000, 1920, 15);
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
 	wxImage gambar = wxBitmap(wxBITMAP_PNG(#101)).ConvertToImage();
 	gambar.Rescale(108, 34);
 
 	//inisialisasi tank
-	tanks.push_back(new Tank(5, 570, gambar,2));
-	tanks.push_back(new Tank(500, 570, gambar.Mirror(),1));
+	tanks.push_back(new Tank(5, 970, gambar,2));
+	tanks.push_back(new Tank(1700, 970, gambar.Mirror(),1));
 	
 	timer->Start(1000);
 	timer2->Start(1);
@@ -42,21 +42,39 @@ Board::Board(wxFrame *parent)
 
 void Board::OnPaint(wxPaintEvent & event)
 {
+	int hit = 1;
 	//if (tankpic != NULL) pdc.DrawBitmap(*tankpic, wxPoint(100, 100), true); //coba gambar tank aja
 	wxBufferedPaintDC pdc(this);
 	pdc.SetBrush(wxBrush(wxColor(*wxWHITE)));
 	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
 	//menggambar tank
 	for (int i = 0; i < tanks.size(); i++) {
-		this->tanks[i]->Draw(pdc);
+		if(tanks[i] != nullptr)
+			this->tanks[i]->Draw(pdc);
 	}
 	this->map->Draw(pdc,counter,stages);
 	//menggambar peluru jika ada kondisi menembak
 	if (stages == 3) {
 		/*wxMessageOutputDebug().Printf("----------Aiming stats---------");
 		wxMessageOutputDebug().Printf("weapon Y : %d",tanks[turn]->getWeapon()->getY());*/
-		if (tanks[turn]->getWeapon()->colisionCheck(600, t)) {
-			this->tanks[turn]->getWeapon()->Draw(tanks[turn]->direction,t, pdc); //draw bullets
+		for (int i = 0; i < tanks.size(); i++)
+		{
+			if (i == turn || tanks[i] == nullptr)
+				continue;
+			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->tx, tanks[turn]->getWeapon()->ty)) {
+				if (tanks[i]->changeHealth(tanks[turn]->getWeapon()->getDmg())) {
+					delete tanks[i];
+					tanks[i] = nullptr;
+				}
+				tanks[turn]->getWeapon()->tx = tanks[turn]->getWeapon()->getX();
+				tanks[turn]->getWeapon()->ty = tanks[turn]->getWeapon()->getY();
+				hit = 0;
+				break;
+			}
+		}
+		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit) {
+			this->tanks[turn]->getWeapon()->Move(tanks[turn]->direction, t);
+			this->tanks[turn]->getWeapon()->Draw(pdc); //draw bullets
 			t++;
 		}
 		else {
@@ -68,6 +86,11 @@ void Board::OnPaint(wxPaintEvent & event)
 			timer->Start(1000);
 			if (turn == tanks.size())
 				turn = 0;
+			while (tanks[turn] == nullptr) {
+				turn++;
+				if (turn == tanks.size())
+					turn = 0;
+			}
 		}
 	}
 	
@@ -108,23 +131,23 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		switch (keycode)
 		{
 		case WXK_UP:
-			ys += 5;
+			ys += 1;
 			tanks[turn]->getWeapon()->setYS(ys);
 			break;
 		case WXK_DOWN:
-			ys -= 5;
+			ys -= 1;
 			if (ys < 0)
 				ys = 0;
 			tanks[turn]->getWeapon()->setYS(ys);
 			break;
 		case WXK_LEFT:
-			v -= 10;
+			v -= 5;
 			if (v < 0)
 				v = 0;
 			tanks[turn]->getWeapon()->setV(v);
 			break;
 		case WXK_RIGHT:
-			v += 10;
+			v += 5;
 			tanks[turn]->getWeapon()->setV(v);
 			break;
 		case WXK_SPACE:
