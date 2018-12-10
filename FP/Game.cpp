@@ -9,7 +9,7 @@ void Game::fitWindowSize()
 {
 	this->boxSizer->Fit(this);
 	this->boxSizer->SetSizeHints(this);
-	this->SetSize(wxSize(1920, 1080));
+	this->SetSize(wxSize(1920,1080));
 	this->Layout();
 }
 

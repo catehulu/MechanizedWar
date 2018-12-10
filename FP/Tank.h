@@ -9,6 +9,7 @@ class Tank
 public:
 	Tank(int gunx, int guny);
 	void Draw(wxBufferedPaintDC &dc);
+	void DrawVelocity(wxBufferedPaintDC &dc);
 	virtual void Move(int maxX,bool direction) = 0;
 	void Rotate(int amount);
 	void SetBodyImage(wxImage res);
@@ -39,6 +40,7 @@ protected:
 	int maxhealth;
 	int currhealth;
 private:
+	int add = 1;
 	bool direction;
 	wxImage body;
 	wxImage gun;

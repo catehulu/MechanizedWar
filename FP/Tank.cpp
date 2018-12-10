@@ -76,6 +76,29 @@ void Tank::Draw(wxBufferedPaintDC & dc)
 	dc.DrawText(x, wxPoint(this->x + (this->width / 2) - 9, this->y - 20));
 }
 
+void Tank::DrawVelocity(wxBufferedPaintDC & dc)
+{
+	int tv;
+	dc.SetBrush(wxBrush(wxColour(*wxWHITE)));
+	dc.SetPen(wxPen(wxColor(*wxBLACK), 1, wxPENSTYLE_SOLID));
+	dc.DrawRectangle(wxPoint(this->x, this->y - 60), wxSize(width,
+		13));
+	tv = weapon->getV()+add;
+	if (tv > 100 || tv < 0)
+		add *= -1;
+	if (tv / 10 > 7)
+		dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
+	else if (tv / 10 > 3)
+		dc.SetBrush(wxBrush(wxColour(*wxYELLOW)));
+	else
+		dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	int tmp;
+	tmp = width * tv / 100;
+	dc.DrawRectangle(wxPoint(this->x, this->y - 60), wxSize(tmp,
+		13));
+	weapon->setV(tv);
+}
+
 void Tank::Rotate(int amount)
 {
 	angle += amount;

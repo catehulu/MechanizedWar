@@ -35,6 +35,8 @@ void Board::OnPaint(wxPaintEvent & event)
 			this->tanks[i]->Draw(pdc);
 	}
 	this->map->Draw(pdc,counter,stages);
+	if (stages == 2)
+		tanks[turn]->DrawVelocity(pdc);
 	//menggambar peluru jika ada kondisi menembak
 	if (stages == 3) {
 		/*wxMessageOutputDebug().Printf("----------Aiming stats---------");
@@ -55,7 +57,6 @@ void Board::OnPaint(wxPaintEvent & event)
 				}
 				tanks[turn]->getWeapon()->reset();
 				hit = 0;
-				break;
 			}
 		}
 		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit) {
@@ -94,6 +95,7 @@ void Board::OnPaint(wxPaintEvent & event)
 void Board::OnKeyDown(wxKeyEvent & event)
 {
 	int keycode = event.GetKeyCode();
+	wxMessageOutputDebug().Printf("%d",keycode);
 	if (stages == 1) { //bagian bergerak,tekan spasi pindah stages
 		wxMessageOutputDebug().Printf("Move");
 		switch (keycode)
@@ -109,6 +111,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case WXK_SPACE:
 			stages++;
 			Aiming(tanks[turn], tanks[turn]->GetDirection());
+			tanks[turn]->getWeapon()->setV(0);
 			break;
 		default:
 			event.Skip();
@@ -130,7 +133,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case 'S':
 			tanks[turn]->Rotate(-1);
 			break;
-		case 'a':
+		/*case 'a':
 		case 'A':
 			v -= 5;
 			if (v < 0)
@@ -141,7 +144,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case 'D':
 			v += 5;
 			tanks[turn]->getWeapon()->setV(v);
-			break;
+			break;*/
 		case WXK_SPACE:
 			stages++;
 			break;

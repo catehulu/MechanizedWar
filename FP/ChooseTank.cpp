@@ -13,6 +13,9 @@ ChooseTank::ChooseTank(Game* parent) :
 	choosetank = new wxBitmap(image);
 	Initiated();
 
+	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+	SetBackgroundColour(wxColour(*wxWHITE));
+
 	Bind(wxEVT_PAINT, &ChooseTank::OnPaint, this);
 	Bind(wxEVT_LEFT_DOWN, &ChooseTank::OnClick, this);
 }
