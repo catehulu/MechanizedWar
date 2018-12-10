@@ -215,7 +215,7 @@ void Board::GameOver(wxString winner)
 
 }
 
-void Board::InitMode1()
+void Board::InitMode1(wxVector <int> choosen)
 {
 
 	shot = 0;
@@ -224,9 +224,23 @@ void Board::InitMode1()
 	turn = 0;
 	t = 1;
 
+	int x;
 	//inisialisasi tank
-	tanks.push_back(new Tiger_1(5, 1000));
-	tanks.push_back(new Tiger_1(1000, 1000, false));
+	switch (choosen[0])
+	{
+	case 0:
+		tanks.push_back(new Tiger_1(5, 1000));
+	default:
+		break;
+	}
+
+	switch (choosen[1])
+	{
+	case 0:
+		tanks.push_back(new Tiger_1(1600, 1000, false));
+	default:
+		break;
+	}
 
 	team1 = 1;
 	team2 = 1;

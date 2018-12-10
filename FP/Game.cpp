@@ -71,6 +71,7 @@ void Game::ShowOver(wxString winner)
 
 void Game::ShowChoose()
 {
+	this->choosePanel->Reset();
 	this->mainPanel->Show(false);
 	this->overPanel->Show(false);
 	this->choosePanel->Show(true);
@@ -79,10 +80,10 @@ void Game::ShowChoose()
 	fitWindowSize();
 }
 
-void Game::ShowBoard(int i)
+void Game::ShowBoard(wxVector <int> choosen, int mode)
 {
-	if (i == 1)
-		boardPanel->InitMode1();
+	if (mode == 1)
+		boardPanel->InitMode1(choosen);
 	this->mainPanel->Show(false);
 	this->overPanel->Show(false);
 	this->choosePanel->Show(false);

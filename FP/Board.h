@@ -17,7 +17,7 @@ public:
 	void Moving(Tank* tank, bool direction);
 	void Aiming(Tank* tank, bool direction);
 	void GameOver(wxString winner);
-	void InitMode1();
+	void InitMode1(wxVector <int> choosen);
 	~Board();
 
 private:

@@ -165,3 +165,13 @@ int Tank::getY()
 {
 	return this->y;
 }
+
+void Tank::setX(int x)
+{
+	this->x = x;
+}
+
+void Tank::sety(int y)
+{
+	this->y = y;
+}

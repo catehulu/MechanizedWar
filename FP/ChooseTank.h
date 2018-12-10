@@ -1,6 +1,7 @@
 #pragma once
 #include <wx/wx.h>
 #include "Game.h"
+#include "Tiger_1.h"
 class ChooseTank : public wxPanel
 {
 public:
@@ -9,9 +10,13 @@ public:
 
 	void OnClick(wxMouseEvent& event);
 	void OnPaint(wxPaintEvent& event);
+	void Initiated();
+	void Reset();
 private:
+	int min = 0;
+	int max = 1;
+	wxVector <int> cycle;
 	Game* parentFrame;
 	wxBitmap *choosetank = nullptr;
-	DECLARE_EVENT_TABLE()
 };
 

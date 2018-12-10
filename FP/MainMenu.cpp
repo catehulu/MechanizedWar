@@ -25,10 +25,10 @@ MainMenu::~MainMenu()
 void MainMenu::OnClick(wxMouseEvent & event)
 {
 	if (event.GetX() >= 756 && event.GetX() <= 1163 && event.GetY() >= 476 && event.GetY() <= 605) {
-		parentFrame->ShowBoard(1);
+		parentFrame->ShowChoose();
 	}
 	else if (event.GetX() >= 756 && event.GetX() <= 1163 && event.GetY() >= 691 && event.GetY() <= 823) {
-
+		parentFrame->Close(true);
 	}
 }
 

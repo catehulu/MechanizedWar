@@ -24,6 +24,9 @@ public:
 	~Tank();
 	int getX();
 	int getY();
+	void setX(int x);
+	void sety(int y);
+
 protected:
 	int x;
 	int y;

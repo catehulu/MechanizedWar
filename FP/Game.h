@@ -22,7 +22,7 @@ public:
 	void ShowMain();
 	void ShowOver(wxString winner);
 	void ShowChoose();
-	void ShowBoard(int i);
+	void ShowBoard(wxVector <int>, int mode);
 	~Game();
 };
 
