@@ -20,24 +20,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="ChooseTank.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="Tiger_1.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
+    <ClInclude Include="ChooseTank.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameOver.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="Tiger_1.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FP.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\assets\Konigstiger.png" />
+    <Image Include="..\assets\Konigstiger_gun.png" />
     <Image Include="..\assets\tankpertamagede.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

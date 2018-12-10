@@ -3,30 +3,43 @@
 #include <wx\dcclient.h>
 #include "wx/dcbuffer.h"
 #include "Weapon.h"
+#include "resource.h"
 class Tank
 {
 public:
-	Tank(int x,int y, wxImage res,int direction);
+	Tank(int gunx, int guny);
 	void Draw(wxBufferedPaintDC &dc);
-	void Move(int amount, int maxX);
-	void SetImage(wxImage res);
-	void setWeapon(int vy, int x, int y);
-	bool checkCollision(Tank* tank);
-	bool checkCollision(int x, int y);
-	bool tankArea(int x,int y);
+	virtual void Move(int maxX,bool direction) = 0;
+	void Rotate(int amount);
+	void SetBodyImage(wxImage res);
+	void SetGunImage(wxImage res);
+	void SetDirection(bool direction);
+	bool GetDirection();
+	wxImage GetBodyImage();
+	wxImage GetGunImage();
+	virtual bool checkCollision(int x, int y);
+	virtual bool tankArea(int x,int y);
 	bool changeHealth(int x);
 	Weapon* getWeapon();
-	wxImage GetImage();
 	~Tank();
 	int getX();
 	int getY();
-	int direction; //1 untuk kekiri 2 untuk kekanan,kemungkinan diganti jadi 1 dan -1 karena rencana inisialisasi tank kiri dulu baru kanan
-private:
+protected:
 	int x;
 	int y;
-	int height = 34,width = 108;
-	int health = 100;
-	wxBitmap* tankpic;
 	Weapon *weapon;
+	int height,width;
+	int speed;
+	int gunx;
+	int guny;
+	int angle=0;
+	int maxhealth;
+	int currhealth;
+private:
+	bool direction;
+	wxImage body;
+	wxImage gun;
+	wxBitmap bodybmp;
+	wxBitmap gunbmp;
 };
 

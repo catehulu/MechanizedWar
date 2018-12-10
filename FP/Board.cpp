@@ -1,19 +1,13 @@
 #include "Board.h"
 #include "wx/dcbuffer.h"
-#include "resource.h"
 #define TIMER1_ID 12121
 #define TIMER2_ID 12212
 
-Board::Board(wxFrame *parent)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition,
-		wxDefaultSize, wxBORDER_NONE)
+Board::Board(Game *parent) :
+	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
 	//inisialisasi game awal
-	shot = 0;
-	stages = 1;
-	counter = 0;
-	turn = 0;
-	t = 1;
+
 	timer = new wxTimer(this, TIMER1_ID);
 	timer2 = new wxTimer(this, TIMER2_ID);
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -21,18 +15,6 @@ Board::Board(wxFrame *parent)
 	//inisialisasi map
 	SetBackgroundColour(wxColour(*wxWHITE));
 	map = new Map(0, 1000, 1920, 15);
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-	wxImage gambar = wxBitmap(wxBITMAP_PNG(#101)).ConvertToImage();
-	gambar.Rescale(108, 34);
-
-	//inisialisasi tank
-	tanks.push_back(new Tank(5, 970, gambar,2));
-	tanks.push_back(new Tank(1700, 970, gambar.Mirror(),1));
-	
-	timer->Start(1000);
-	timer2->Start(1);
-
 
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
@@ -61,35 +43,47 @@ void Board::OnPaint(wxPaintEvent & event)
 		{
 			if (i == turn || tanks[i] == nullptr)
 				continue;
-			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->tx, tanks[turn]->getWeapon()->ty)) {
+			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy())) {
 				if (tanks[i]->changeHealth(tanks[turn]->getWeapon()->getDmg())) {
+					if (!tanks[i]->GetDirection())
+						team1--;
+					else {
+						team2--;
+					}
 					delete tanks[i];
 					tanks[i] = nullptr;
 				}
-				tanks[turn]->getWeapon()->tx = tanks[turn]->getWeapon()->getX();
-				tanks[turn]->getWeapon()->ty = tanks[turn]->getWeapon()->getY();
+				tanks[turn]->getWeapon()->reset();
 				hit = 0;
 				break;
 			}
 		}
 		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit) {
-			this->tanks[turn]->getWeapon()->Move(tanks[turn]->direction, t);
+			this->tanks[turn]->getWeapon()->Move(tanks[turn]->GetDirection(), t);
 			this->tanks[turn]->getWeapon()->Draw(pdc); //draw bullets
 			t++;
 		}
 		else {
+			if (team1 == 0) {
+				GameOver("Team 1");
+			}
+			else if (team2 == 0) {
+				GameOver("Team 2");
+			}
 		//inisialisasi setelah proses menembak selesai
-			t = 0;
-			stages = 1;
-			counter = 0;
-			turn++;
-			timer->Start(1000);
-			if (turn == tanks.size())
-				turn = 0;
-			while (tanks[turn] == nullptr) {
+			else {
+				t = 0;
+				stages = 1;
+				counter = 0;
 				turn++;
+				timer->Start(1000);
 				if (turn == tanks.size())
 					turn = 0;
+				while (tanks[turn] == nullptr) {
+					turn++;
+					if (turn == tanks.size())
+						turn = 0;
+				}
 			}
 		}
 	}
@@ -104,15 +98,17 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		wxMessageOutputDebug().Printf("Move");
 		switch (keycode)
 		{
-		case WXK_LEFT:
-			Moving(tanks[turn], 1);
+		case 'a':
+		case 'A':
+			Moving(tanks[turn], false);
 			break;
-		case WXK_RIGHT:
-			Moving(tanks[turn], 2);
+		case 'd':
+		case 'D':
+			Moving(tanks[turn], true);
 			break;
 		case WXK_SPACE:
 			stages++;
-			Aiming(tanks[turn], tanks[turn]->direction);
+			Aiming(tanks[turn], tanks[turn]->GetDirection());
 			break;
 		default:
 			event.Skip();
@@ -121,32 +117,28 @@ void Board::OnKeyDown(wxKeyEvent & event)
 	}
 	else if (stages == 2) {//bagian aiming, kiri kanan velocity, atas bawah derajat
 		wxMessageOutputDebug().Printf("OnKeyShoot");
-		int xs = 0;
-		int ys = 0;
 		int v = 0;
 		v = tanks[turn]->getWeapon()->getV();
-		xs = tanks[turn]->getWeapon()->getXS();
-		ys = tanks[turn]->getWeapon()->getYS();
 		int keycode = event.GetKeyCode();
 		switch (keycode)
 		{
-		case WXK_UP:
-			ys += 1;
-			tanks[turn]->getWeapon()->setYS(ys);
+		case 'w':
+		case 'W':
+			tanks[turn]->Rotate(1);
 			break;
-		case WXK_DOWN:
-			ys -= 1;
-			if (ys < 0)
-				ys = 0;
-			tanks[turn]->getWeapon()->setYS(ys);
+		case 's':
+		case 'S':
+			tanks[turn]->Rotate(-1);
 			break;
-		case WXK_LEFT:
+		case 'a':
+		case 'A':
 			v -= 5;
 			if (v < 0)
 				v = 0;
 			tanks[turn]->getWeapon()->setV(v);
 			break;
-		case WXK_RIGHT:
+		case 'd':
+		case 'D':
 			v += 5;
 			tanks[turn]->getWeapon()->setV(v);
 			break;
@@ -184,23 +176,23 @@ void Board::OnTimeRender(wxTimerEvent & event)
 	Refresh(true);
 }
 
-void Board::Moving(Tank * tank, int direction)
+void Board::Moving(Tank * tank, bool direction)
 {
 	//wxMessageOutputDebug().Printf("Move Initiated\n");
-	if (direction == 1) {
-		tank->Move(-4, GetClientSize().GetWidth());
+	if (!direction) {
+		tank->Move(GetClientSize().GetWidth(),direction);
 	}
-	else if (direction == 2) {
-		tank->Move(4, GetClientSize().GetWidth());
+	else if (direction) {
+		tank->Move(GetClientSize().GetWidth(),direction);
 	}
 	//this->Update();
 	//this->Refresh(true);
 }
 
-void Board::Aiming(Tank * tank, int direction)
+void Board::Aiming(Tank * tank, bool direction)
 {
 	shot = 1;
-	if (direction == 1) {
+	if (!direction) {
 		tank->getWeapon()->setX(tank->getX());
 		tank->getWeapon()->setY(tank->getY());
 	}
@@ -208,6 +200,39 @@ void Board::Aiming(Tank * tank, int direction)
 		tank->getWeapon()->setX(tank->getX() + 80);
 		tank->getWeapon()->setY(tank->getY());
 	}
+}
+
+void Board::GameOver(wxString winner)
+{
+	timer->Stop();
+	timer2->Stop();
+	while (!tanks.empty()) {
+		delete tanks.back();
+		tanks.pop_back();
+	}
+
+	parentFrame->ShowOver(winner);
+
+}
+
+void Board::InitMode1()
+{
+
+	shot = 0;
+	stages = 1;
+	counter = 0;
+	turn = 0;
+	t = 1;
+
+	//inisialisasi tank
+	tanks.push_back(new Tiger_1(5, 1000));
+	tanks.push_back(new Tiger_1(1000, 1000, false));
+
+	team1 = 1;
+	team2 = 1;
+
+	timer->Start(1000);
+	timer2->Start(1);
 }
 
 

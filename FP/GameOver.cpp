@@ -1,0 +1,62 @@
+#include "GameOver.h"
+
+BEGIN_EVENT_TABLE(GameOver, wxPanel)
+	EVT_PAINT(GameOver::OnPaint)
+	EVT_LEFT_DOWN(GameOver::OnClick)
+	EVT_TIMER(1000,GameOver::OnTimer)
+END_EVENT_TABLE()
+
+GameOver::GameOver(Game* parent) :
+	wxPanel(parent, wxID_ANY), parentFrame(parent)
+{
+	wxImageHandler *jpgloader = new wxJPEGHandler();
+	wxImage::AddHandler(jpgloader);
+	wxImage image(wxT("Game Over.jpg"),
+		wxBITMAP_TYPE_JPEG);
+	gaameover = new wxBitmap(image);
+
+	timer = new wxTimer(this, 1000);
+}
+
+
+GameOver::~GameOver()
+{
+}
+
+void GameOver::OnClick(wxMouseEvent & event)
+{
+	if (event.GetX() >= 756 && event.GetX() <= 1163 && event.GetY() >= 476 && event.GetY() <= 605) {
+
+	}
+	else if (event.GetX() >= 756 && event.GetX() <= 1163 && event.GetY() >= 691 && event.GetY() <= 823) {
+
+	}
+}
+
+void GameOver::OnPaint(wxPaintEvent & event)
+{
+	wxPaintDC pdc(this);
+	pdc.DrawBitmap(*gaameover, wxPoint(0, 0), true);
+	wxFont font(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+	pdc.SetFont(font);
+	pdc.SetTextForeground((wxColor(*wxBLACK)));
+	pdc.DrawText(winner, wxPoint(771, 541));
+
+}
+
+void GameOver::OnTimer(wxTimerEvent & event)
+{
+	sec++;
+	if (sec == 3) {
+		timer->Stop();
+		parentFrame->ShowMain();
+		winner = "";
+	}
+}
+
+void GameOver::TimerStart(wxString winner)
+{
+	this->winner = winner;
+	timer->Start(1000);
+	sec = 0;
+}

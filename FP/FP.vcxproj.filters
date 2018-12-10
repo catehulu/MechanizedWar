@@ -33,6 +33,18 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tiger_1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseTank.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tank.h">
@@ -53,6 +65,18 @@
     <ClInclude Include="Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tiger_1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseTank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FP.rc">
@@ -61,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\assets\tankpertamagede.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Konigstiger_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Konigstiger.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

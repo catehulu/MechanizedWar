@@ -1,12 +1,10 @@
 #include "Weapon.h"
+#include <math.h>
 
-
-
-Weapon::Weapon(int v,int x,int y) :
-	v(v), x(x), y(y), tx(x), ty(y)
+Weapon::Weapon(int v,int x,int y,int angle) :
+	v(v), x(x), y(y), tx(x), ty(y), angle(angle)
 {
-	xs = 30;
-	ys = 30;
+	
 }
 
 void Weapon::Draw(wxBufferedPaintDC &dc)
@@ -19,19 +17,19 @@ void Weapon::Draw(wxBufferedPaintDC &dc)
 	wxMessageOutputDebug().Printf("bullet y %d.\n", y);
 }
 
-void Weapon::Move(int direction, int t)
+void Weapon::Move(bool direction, int t)
 {
 	int x;
 	int y;
 	double y_changes;
 	double x_changes;
-	if (direction == 2) {
-		y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
-		x_changes = v * cos(xs, ys) * t;
+	if (direction) {
+		y_changes = v * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
+		x_changes = v * cos(angle * 3.1415 / 180.0) * t;
 	}
 	else {
-		y_changes = v * sin(xs, ys) * t - (0.5 * t*t*this->g);
-		x_changes = v * cos(xs, ys) * t * -1;
+		y_changes = v * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
+		x_changes = v * cos(angle * 3.1415 / 180.0) * t * -1;
 	}
 	tx = this->x + x_changes;
 	ty = this->y - y_changes;
@@ -62,14 +60,14 @@ int Weapon::getDmg()
 	return this->damage;
 }
 
-int Weapon::getXS()
+int Weapon::getTx()
 {
-	return this->xs;
+	return tx;
 }
 
-int Weapon::getYS()
+int Weapon::getTy()
 {
-	return this->ys;
+	return ty;
 }
 
 void Weapon::setV(int v)
@@ -77,14 +75,25 @@ void Weapon::setV(int v)
 	this->v = v;
 }
 
-void Weapon::setXS(int xs)
+void Weapon::setTx(int tx)
 {
-	this->xs = xs;
+	this->tx = tx;
 }
 
-void Weapon::setYS(int ys)
+void Weapon::setTy(int ty)
 {
-	this->ys = ys;
+	this->ty = ty;
+}
+
+void Weapon::setAngle(int angle)
+{
+	this->angle = angle;
+}
+
+void Weapon::reset()
+{
+	tx = x;
+	ty = y;
 }
 
 int Weapon::getV()
@@ -95,22 +104,6 @@ int Weapon::getV()
 void Weapon::setDmg(int dmg)
 {
 	this->damage = dmg;
-}
-
-double Weapon::cos(double x, double y)
-{
-	double side;
-	side = sqrt(x*x + y*y);
-
-	return x/side;
-}
-
-double Weapon::sin(double x, double y)
-{
-	double side;
-	side = sqrt(x*x + y * y);
-
-	return y / side;
 }
 
 Weapon::~Weapon()

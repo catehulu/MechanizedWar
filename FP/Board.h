@@ -1,31 +1,39 @@
 #pragma once
+#include "Game.h"
 #include "Tank.h"
 #include "Map.h"
 #include "Weapon.h"
+#include "Tiger_1.h"
 #include <vector>
 #include <wx/wx.h>
 class Board : public wxPanel
 {
 public:
-	Board(wxFrame *parent);
+	Board(Game *parent);
 	void OnPaint(wxPaintEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
 	void OnTimer(wxTimerEvent& event);
 	void OnTimeRender(wxTimerEvent& event);
-	void Moving(Tank* tank, int direction);
-	void Aiming(Tank* tank, int direction);
+	void Moving(Tank* tank, bool direction);
+	void Aiming(Tank* tank, bool direction);
+	void GameOver(wxString winner);
+	void InitMode1();
 	~Board();
 
 private:
 	int shot;
+	int mode;
+	int team1;
+	int team2;
 	wxTimer *timer;
 	wxTimer *timer2;
-	std::vector <Tank*> tanks;
+	wxVector <Tank*> tanks;
 	Map *map;
 	int turn;
 	int counter;
 	wxBitmap* tankpic = NULL;
 	int t;
 	int stages; //terdiri dari 3 stages, moving,aiming,shooting
+	Game* parentFrame;
 };
 
