@@ -6,12 +6,12 @@
 class Weapon
 {
 public:
-	Weapon(int v,int x,int y,int angle);
-	void Draw(wxBufferedPaintDC &dc);
-	void Move(bool direction,int t);
+	Weapon(double v,int x,int y,int angle, double height);//default constructor weapon
+	void Draw(wxBufferedPaintDC &dc);//gambar peluru
+	void Move(bool direction,int t);//pergerakan peluru memakai rumus parabola
 	int getX();
 	int getY();
-	int getV();
+	double getV();
 	int getDmg();
 	int getXS();
 	int getYS();
@@ -20,21 +20,27 @@ public:
 	void setX(int x);
 	void setY(int y);
 	void setDmg(int dmg);
-	void setV(int v);
+	void setV(double v);
 	void setTx(int tx);
 	void setTy(int ty);
 	void setAngle(int angle);
 	void reset();
 	~Weapon();
 private:
-	int tx;//posisi x temporary senjata
-	int ty;//posisi y temporary senjata
-	int x;//posisi x senjata
-	int y;//posisi y senjata
+	double tx;//posisi x temporary senjata
+	double ty;//posisi y temporary senjata
+	double x;//posisi x senjata
+	double y;//posisi y senjata
+	double maxv;
+	double oldy_changes=0;//perubahan y lama
+	double oldx_changes=0;// perubahan x lama
+	double y_changes = 0;//perubahan y baru
+	double x_changes = 0;//perubahan y lama
 	int size;
-	int v = 500;
+	double v = 0;
 	int damage = 100;
 	const double g = 0.11;//konstanta gravitasi
 	int angle;
+	wxImage img;
 };
 

@@ -28,6 +28,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tiger_1.cpp" />
+    <ClCompile Include="Tiger_2.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +41,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tiger_1.h" />
+    <ClInclude Include="Tiger_2.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

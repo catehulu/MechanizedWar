@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Weapon.h"
 #include "Tiger_1.h"
+#include "Tiger_2.h"
 #include <vector>
 #include <wx/wx.h>
 class Board : public wxPanel

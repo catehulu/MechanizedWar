@@ -1,36 +1,69 @@
 #include "Weapon.h"
+#include "wx/graphics.h"
 #include <math.h>
 
-Weapon::Weapon(int v,int x,int y,int angle) :
-	v(v), x(x), y(y), tx(x), ty(y), angle(angle)
+Weapon::Weapon(double v,int x,int y,int angle, double height) :
+	maxv(v), x(x), y(y), tx(x), ty(y), angle(angle)
 {
-	
+	img = wxBitmap(wxBITMAP_PNG(#116)).ConvertToImage();
+	double ar = img.GetWidth() / img.GetHeight();
+	img.Rescale(ar*height, height,wxIMAGE_QUALITY_HIGH);
 }
 
 void Weapon::Draw(wxBufferedPaintDC &dc)
 {
-	dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
+	/*dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
 	dc.SetPen(wxPen(wxColor(*wxBLUE), 1, wxPENSTYLE_SOLID));
-	dc.DrawCircle(wxPoint(tx,ty), wxCoord(10));
+	dc.DrawCircle(wxPoint(tx,ty), wxCoord(10));*/
+	double angle = atan2(-(y_changes-oldy_changes), x_changes-oldx_changes)* 180.0 / 3.1415 ;
+	if (angle < 0) angle += 360.0;
+	wxGraphicsContext *gc = wxGraphicsContext::Create(dc);
+	wxImage temp = img.Rotate(-angle * 3.1415/180.0, wxPoint(0, 0), true);
+	//	gungbmp = gc->CreateBitmapFromImage(temp);
+	
+	//	bodygbmp = gc->CreateBitmapFromImage(tempbody);
+		//Sistem Pivot biar tembakan memutar pada satu titik//
+	double xcomp = -img.GetHeight() / 2, ycomp = -img.GetHeight() / 4;
+	if (angle >= 270 && angle <= 360)  //180-270
+	{
+
+	}
+	else if ( angle >= 180 && angle <= 270) //270-360
+	{
+		xcomp = -temp.GetWidth() + img.GetHeight(); //wxMessageOutputDebug().Printf("disini 270");
+
+	}
+	else if ( angle >= 90 && angle <= 180)  //0-90
+	{
+		ycomp = -temp.GetHeight() + img.GetHeight();
+		xcomp = -temp.GetWidth() + img.GetHeight(); //wxMessageOutputDebug().Printf("disini 180");
+	}
+	else if (angle >= 0 && angle <= 90) //90-180
+	{
+		ycomp = -temp.GetHeight() + img.GetHeight();
+	}
+	gc->DrawBitmap(temp, tx+xcomp, ty+ycomp, temp.GetWidth(), temp.GetHeight());
 	wxMessageOutputDebug().Printf("----------bullet stats---------");
-	wxMessageOutputDebug().Printf("bullet x %d.\n", x);
-	wxMessageOutputDebug().Printf("bullet y %d.\n", y);
+	wxMessageOutputDebug().Printf("bullet x %lf.\n", tx);
+	wxMessageOutputDebug().Printf("bullet y %lf.\n", ty);
+	wxMessageOutputDebug().Printf("bullet angle %lf.\n", angle);
+	delete gc;
+
 }
 
 void Weapon::Move(bool direction, int t)
 {
-	int x;
-	int y;
-	double y_changes;
-	double x_changes;
+	oldx_changes = x_changes;
+	oldy_changes = y_changes;
 	if (direction) {
-		y_changes = v * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
-		x_changes = v * cos(angle * 3.1415 / 180.0) * t;
+		y_changes = v * maxv * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
+		x_changes = v * maxv * cos(angle * 3.1415 / 180.0) * t;
 	}
 	else {
-		y_changes = v * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
-		x_changes = v * cos(angle * 3.1415 / 180.0) * t * -1;
+		y_changes = v * maxv * sin(angle * 3.1415 / 180.0) * t - (0.5 * t*t*this->g);
+		x_changes = v * maxv * cos(angle * 3.1415 / 180.0) * t * -1;
 	}
+
 	tx = this->x + x_changes;
 	ty = this->y - y_changes;
 }
@@ -70,7 +103,7 @@ int Weapon::getTy()
 	return ty;
 }
 
-void Weapon::setV(int v)
+void Weapon::setV(double v)
 {
 	this->v = v;
 }
@@ -96,7 +129,7 @@ void Weapon::reset()
 	ty = y;
 }
 
-int Weapon::getV()
+double Weapon::getV()
 {
 	return this->v;
 }

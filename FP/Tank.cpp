@@ -1,4 +1,5 @@
 #include "Tank.h"
+#include "wx/graphics.h"
 
 
 Tank::Tank(int gunx, int guny)
@@ -17,8 +18,10 @@ void Tank::Draw(wxBufferedPaintDC & dc)
 	}
 	gunbmp = wxBitmap(temp);
 	bodybmp = wxBitmap(tempbody);
+//	gungbmp = gc->CreateBitmapFromImage(temp);
+//	bodygbmp = gc->CreateBitmapFromImage(tempbody);
 	//Sistem Pivot biar tembakan memutar pada satu titik//
-	int xcomp = -gun.GetHeight() / 4, ycomp = -gun.GetHeight() / 4;
+	double xcomp = -gun.GetHeight() / 2, ycomp = -gun.GetHeight() / 4;
 	if ((direction && angle >= 270 && angle <= 360) || (!direction && angle >= 180 && angle <= 270))  //180-270
 	{
 
@@ -40,28 +43,30 @@ void Tank::Draw(wxBufferedPaintDC & dc)
 	}
 	//------------------------------------------//
 
-	int ActualGunX = gunx, ActualGunY = guny;
+	double ActualGunX = gunx, ActualGunY = guny;
+	double gunh = temp.GetHeight();
+	double gunw = temp.GetWidth();
 	if (direction)
 	{
-		ActualGunX = (-(gunx - (body.GetWidth() / 2)) + body.GetWidth() / 2) - 10;
+		ActualGunX = (-(gunx - ((float)body.GetWidth() / 2)) + (float)body.GetWidth() / 2) - (float)gun.GetHeight()/4;
 
 	}
 	//wxMessageOutputDebug().Printf("y%d x%d width%d", ActualGunY, ActualGunX, body.GetWidth());
 	//Gambar bmp gun yang telah ter-rotate dengan koordinat yang mengkompensasi putaran//
 	dc.DrawBitmap(gunbmp, wxPoint(this->x + xcomp + ActualGunX, this->y + ycomp + ActualGunY), true);
 	dc.DrawBitmap(bodybmp, wxPoint(this->x, this->y), true);
+	/*gc->DrawBitmap(gungbmp, this->x + xcomp + ActualGunX, this->y + ycomp + ActualGunY ,gunw,gunh);
+	gc->DrawBitmap(bodygbmp, this->x, this->y,body.GetWidth(),body.GetHeight());*/
 
 	//health bar
 	dc.SetBrush(wxBrush(wxColour(*wxWHITE)));
 	dc.SetPen(wxPen(wxColor(*wxBLACK), 1, wxPENSTYLE_SOLID));
 	dc.DrawRectangle(wxPoint(this->x, this->y - 20), wxSize(width,
 		13));
-	if (currhealth / 10 > 7)
-		dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
-	else if (currhealth / 10 > 3)
-		dc.SetBrush(wxBrush(wxColour(*wxYELLOW)));
-	else
-		dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	double percentage = ((float)currhealth / (float)maxhealth);
+	int red = percentage <= 0.5f ? 255 : 255 - (percentage*2.0* 255);
+	int green = percentage >= 0.5f ? 255 : (percentage*2.0* 255);
+	dc.SetBrush(wxBrush(wxColour(red, green, 0)));
 	//percobaan
 	double tmp;
 	tmp = width * currhealth / maxhealth;
@@ -78,25 +83,23 @@ void Tank::Draw(wxBufferedPaintDC & dc)
 
 void Tank::DrawVelocity(wxBufferedPaintDC & dc)
 {
-	int tv;
+	double tv;
 	dc.SetBrush(wxBrush(wxColour(*wxWHITE)));
 	dc.SetPen(wxPen(wxColor(*wxBLACK), 1, wxPENSTYLE_SOLID));
 	dc.DrawRectangle(wxPoint(this->x, this->y - 60), wxSize(width,
 		13));
-	tv = weapon->getV()+add;
+	tv = weapon->getV()*100+add;
 	if (tv > 100 || tv < 0)
 		add *= -1;
-	if (tv / 10 > 7)
-		dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
-	else if (tv / 10 > 3)
-		dc.SetBrush(wxBrush(wxColour(*wxYELLOW)));
-	else
-		dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	int red = tv<=50?255:255 - (((tv/50)) * 255);
+	int green = tv>=50?255:(((tv /50)) * 255);
+	dc.SetBrush(wxBrush(wxColour(red,green,0)));
 	int tmp;
 	tmp = width * tv / 100;
 	dc.DrawRectangle(wxPoint(this->x, this->y - 60), wxSize(tmp,
 		13));
-	weapon->setV(tv);
+	wxMessageOutputDebug().Printf("tv %lf | tmp %d", tv, tmp);
+	weapon->setV(tv/100);
 }
 
 void Tank::Rotate(int amount)

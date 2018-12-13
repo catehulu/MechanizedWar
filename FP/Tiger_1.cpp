@@ -5,18 +5,16 @@
 Tiger_1::Tiger_1(int x, int y, bool direction)
 	:Tank(30,10)
 {
-	speed = 5;
+	speed = 4;
 	maxhealth = 260;
 	currhealth = 260;
 	height = 49;
-	width = 135;
-	weapon = new Weapon(5, gunx, guny, angle);
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
+	width = 107;
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#107)).ConvertToImage();
-	tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
-	tgun.Rescale(0.1*tgun.GetWidth(), 0.1*tgun.GetHeight());
+	tbody.Rescale(107, 49, wxIMAGE_QUALITY_HIGH);
+	tgun.Rescale(66, 10, wxIMAGE_QUALITY_HIGH);
+	weapon = new Weapon(30, gunx, guny, angle,tgun.GetHeight());
 	SetBodyImage(tbody);
 	SetGunImage(tgun);
 	SetDirection(direction);
@@ -26,7 +24,7 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 
 void Tiger_1::Move(int maxX, bool direction)
 {
-	int tempx = x;
+	double tempx = x;
 	if (!direction)
 		tempx += speed * -1;
 	else

@@ -168,10 +168,10 @@ void Board::OnTimer(wxTimerEvent & event)
 		if (turn == tanks.size())
 			turn = 0;
 	}
-	wxMessageOutputDebug().Printf("----------board stats---------");
-	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
-	wxMessageOutputDebug().Printf("t event %d.", t);
-	wxMessageOutputDebug().Printf("stages event %d.", stages);
+	//wxMessageOutputDebug().Printf("----------board stats---------");
+	//wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
+	//wxMessageOutputDebug().Printf("t event %d.", t);
+	//wxMessageOutputDebug().Printf("stages event %d.", stages);
 }
 
 void Board::OnTimeRender(wxTimerEvent & event)
@@ -233,6 +233,10 @@ void Board::InitMode1(wxVector <int> choosen)
 	{
 	case 0:
 		tanks.push_back(new Tiger_1(5, 1000));
+		break;
+	case 1:
+		tanks.push_back(new Tiger_2(5, 1000));
+		break;
 	default:
 		break;
 	}
@@ -241,6 +245,10 @@ void Board::InitMode1(wxVector <int> choosen)
 	{
 	case 0:
 		tanks.push_back(new Tiger_1(1600, 1000, false));
+		break;
+	case 1:
+		tanks.push_back(new Tiger_2(1600, 1000, false));
+		break;
 	default:
 		break;
 	}
@@ -266,4 +274,8 @@ Board::~Board()
 		delete tanks.back();
 		tanks.pop_back();
 	}
+	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
+	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
+	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
+	Unbind(wxEVT_TIMER, &Board::OnTimeRender, this, TIMER2_ID);
 }

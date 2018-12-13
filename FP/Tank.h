@@ -3,6 +3,7 @@
 #include <wx\dcclient.h>
 #include "wx/dcbuffer.h"
 #include "Weapon.h"
+#include "wx/graphics.h"
 #include "resource.h"
 class Tank
 {
@@ -29,14 +30,14 @@ public:
 	void sety(int y);
 
 protected:
-	int x;
-	int y;
+	double x;
+	double y;
 	Weapon *weapon;
 	int height,width;
-	int speed;
-	int gunx;
-	int guny;
-	int angle=0;
+	double speed;
+	double gunx;
+	double guny;
+	double angle=0;
 	int maxhealth;
 	int currhealth;
 private:
@@ -46,5 +47,7 @@ private:
 	wxImage gun;
 	wxBitmap bodybmp;
 	wxBitmap gunbmp;
+	wxGraphicsBitmap bodygbmp;
+	wxGraphicsBitmap gungbmp;
 };
 

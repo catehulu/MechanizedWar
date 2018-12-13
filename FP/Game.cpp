@@ -96,4 +96,8 @@ void Game::ShowBoard(wxVector <int> choosen, int mode)
 
 Game::~Game()
 {
+	delete mainPanel;
+	delete overPanel;
+	delete choosePanel;
+	delete boardPanel;
 }
