@@ -168,10 +168,11 @@ void Board::OnTimer(wxTimerEvent & event)
 		if (turn == tanks.size())
 			turn = 0;
 	}
-	//wxMessageOutputDebug().Printf("----------board stats---------");
-	//wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
-	//wxMessageOutputDebug().Printf("t event %d.", t);
-	//wxMessageOutputDebug().Printf("stages event %d.", stages);
+	counter++;
+	wxMessageOutputDebug().Printf("----------board stats---------");
+	wxMessageOutputDebug().Printf("wxTimer event %d.", counter);
+	wxMessageOutputDebug().Printf("t event %d.", t);
+	wxMessageOutputDebug().Printf("stages event %d.", stages);
 }
 
 void Board::OnTimeRender(wxTimerEvent & event)

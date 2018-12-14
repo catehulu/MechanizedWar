@@ -19,6 +19,7 @@
 #define PNTHR_GUN						115
 #define AP_SHELL						116
 #define HE_SHELL						117
+#define MAIN_MENU						118
 
 // Next default values for new objects
 // 
