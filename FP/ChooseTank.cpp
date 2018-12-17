@@ -4,13 +4,11 @@
 ChooseTank::ChooseTank(Game* parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
-	wxImageHandler *jpgloader = new wxJPEGHandler();
-	wxImage::AddHandler(jpgloader);
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
-	wxImage image(wxT("Tank Selection.jpg"),
-		wxBITMAP_TYPE_JPEG);
-	choosetank = new wxBitmap(image);
+	wxImage temp = wxBitmap(wxBITMAP_PNG(#119)).ConvertToImage();
+	temp.Rescale(1920, 1080, wxIMAGE_QUALITY_HIGH);
+	choosetank = new wxBitmap(temp);
 	Initiated();
 
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);

@@ -37,7 +37,7 @@ private:
 	Map *map;
 	int turn;
 	int counter;
-	wxBitmap* tankpic = NULL;
+	wxBitmap* imgpic = NULL;
 	int t;
 	int stages; //terdiri dari 3 stages, moving,aiming,shooting
 	Game* parentFrame;
