@@ -14,7 +14,7 @@ public:
 	void Reset();
 private:
 	int min = 0;
-	int max = 1;
+	int max = 2;
 	wxVector <int> cycle;
 	Game* parentFrame;
 	wxBitmap *choosetank = nullptr;

@@ -9,6 +9,17 @@
 #define PRSHG_GUN						105
 #define TIGER_BODY						106
 #define TIGER_GUN						107
+#define KV2_BODY						108
+#define KV2_GUN							109
+#define SHRMN_BODY						110
+#define SHRMN_GUN						111
+#define T34_BODY						112
+#define T34_GUN							113
+#define PNTHR_BODY						114
+#define PNTHR_GUN						115
+#define AP_SHELL						116
+#define HE_SHELL						117
+#define MAIN_MENU						118
 
 // Next default values for new objects
 // 

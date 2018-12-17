@@ -4,8 +4,13 @@
 #include "Map.h"
 #include "Weapon.h"
 #include "Tiger_1.h"
+#include "Tiger_2.h"
+#include "Obstacle.h"
+#include "Building.h"
+#include "Bush.h"
 #include <vector>
 #include <wx/wx.h>
+#include <time.h>
 class Board : public wxPanel
 {
 public:
@@ -28,6 +33,7 @@ private:
 	wxTimer *timer;
 	wxTimer *timer2;
 	wxVector <Tank*> tanks;
+	wxVector <Obstacle*> obstacle;
 	Map *map;
 	int turn;
 	int counter;

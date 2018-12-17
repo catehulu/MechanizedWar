@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="BasicWeapon.cpp" />
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Bush.cpp" />
     <ClCompile Include="ChooseTank.cpp" />
     <ClCompile Include="ExplosiveWeapon.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -28,24 +30,30 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="SniperWeapon.cpp" />
     <ClCompile Include="Tank.cpp" />
     <ClCompile Include="Tiger_1.cpp" />
+    <ClCompile Include="Tiger_2.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicWeapon.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="Building.h" />
+    <ClInclude Include="Bush.h" />
     <ClInclude Include="ChooseTank.h" />
     <ClInclude Include="ExplosiveWeapon.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SniperWeapon.h" />
     <ClInclude Include="Tank.h" />
     <ClInclude Include="Tiger_1.h" />
+    <ClInclude Include="Tiger_2.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>

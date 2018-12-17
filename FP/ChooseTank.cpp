@@ -23,6 +23,8 @@ ChooseTank::ChooseTank(Game* parent) :
 
 ChooseTank::~ChooseTank()
 {
+	Unbind(wxEVT_PAINT, &ChooseTank::OnPaint, this);
+	delete choosetank;
 }
 void ChooseTank::OnClick(wxMouseEvent & event)
 {
@@ -62,8 +64,6 @@ void ChooseTank::OnPaint(wxPaintEvent & event)
 	int x, y;
 	for (int i = 0; i < cycle.size(); i++)
 	{
-		if (cycle[i] == 1)
-			continue;
 		if (i == 0) {
 			x = 232;
 			y = 436;
@@ -77,6 +77,11 @@ void ChooseTank::OnPaint(wxPaintEvent & event)
 		{
 		case 0:
 			tbody = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 1:
+			tbody = wxBitmap(wxBITMAP_PNG(#102)).ConvertToImage();
 			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;

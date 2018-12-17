@@ -8,12 +8,11 @@ END_EVENT_TABLE()
 MainMenu::MainMenu(Game* parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
-	wxImageHandler *jpgloader = new wxJPEGHandler();
-	wxImage::AddHandler(jpgloader);
-
-	wxImage image(wxT("Main Menu.jpg"),
-		wxBITMAP_TYPE_JPEG);
-	mainmenu = new wxBitmap(image);
+	wxImageHandler *pngloader = new wxPNGHandler();
+	wxImage::AddHandler(pngloader);
+	wxImage temp = wxBitmap(wxBITMAP_PNG(#118)).ConvertToImage();
+	temp.Rescale(1920, 1080, wxIMAGE_QUALITY_HIGH);
+	mainmenu = new wxBitmap(temp);
 
 }
 

@@ -7,7 +7,7 @@ Board::Board(Game *parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
 	//inisialisasi game awal
-
+	srand(time(NULL));
 	timer = new wxTimer(this, TIMER1_ID);
 	timer2 = new wxTimer(this, TIMER2_ID);
 	this->SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -35,6 +35,11 @@ void Board::OnPaint(wxPaintEvent & event)
 			this->tanks[i]->Draw(pdc);
 	}
 	this->map->Draw(pdc,counter,stages);
+	for (int i = 0; i < obstacle.size(); i++)
+	{
+		if (obstacle[i] != nullptr)
+			this->obstacle[i]->draw(pdc);
+	}
 	if (stages == 2) {
 		tanks[turn]->DrawVelocity(pdc);
 		tanks[turn]->DrawCurrentWeapon(pdc);
@@ -58,6 +63,19 @@ void Board::OnPaint(wxPaintEvent & event)
 					tanks[i] = nullptr;
 				}
 				hit = 0;
+			}
+		}
+		for (int i = 0; i < obstacle.size(); i++)
+		{
+			if (obstacle[i] == nullptr)
+				continue;
+			if (tanks[turn]->checkCollisionObstacle(obstacle[i])) {
+				hit = 0;
+				if (obstacle[i]->healthChange(tanks[turn]->getWeapon()->getDmg())) {
+					delete obstacle[i];
+					obstacle[i] = nullptr;
+				}
+				break;
 			}
 		}
 		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit && tanks[turn]->ammoCheck()) {
@@ -96,9 +114,9 @@ void Board::OnPaint(wxPaintEvent & event)
 void Board::OnKeyDown(wxKeyEvent & event)
 {
 	int keycode = event.GetKeyCode();
-	wxMessageOutputDebug().Printf("%d",keycode);
+	//wxMessageOutputDebug().Printf("%d",keycode);
 	if (stages == 1) { //bagian bergerak,tekan spasi pindah stages
-		wxMessageOutputDebug().Printf("Move");
+		//wxMessageOutputDebug().Printf("Move");
 		switch (keycode)
 		{
 		case 'a':
@@ -120,7 +138,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		}
 	}
 	else if (stages == 2) {//bagian aiming, kiri kanan velocity, atas bawah derajat
-		wxMessageOutputDebug().Printf("OnKeyShoot");
+		//wxMessageOutputDebug().Printf("OnKeyShoot");
 		int v = 0;
 		v = tanks[turn]->getWeapon()->getV();
 		int keycode = event.GetKeyCode();
@@ -138,9 +156,6 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			tanks[turn]->changeWeapon(1);
 			break;
 		case '2':
-			tanks[turn]->changeWeapon(2);
-			break;
-		case '3':
 			tanks[turn]->changeWeapon(3);
 			break;
 		case WXK_SPACE:
@@ -169,10 +184,11 @@ void Board::OnTimer(wxTimerEvent & event)
 		if (turn == tanks.size())
 			turn = 0;
 	}
-	wxMessageOutputDebug().Printf("----------board stats---------");
-	wxMessageOutputDebug().Printf("wxTimer event %d.", counter++);
+	counter++;
+	/*wxMessageOutputDebug().Printf("----------board stats---------");
+	wxMessageOutputDebug().Printf("wxTimer event %d.", counter);
 	wxMessageOutputDebug().Printf("t event %d.", t);
-	wxMessageOutputDebug().Printf("stages event %d.", stages);
+	wxMessageOutputDebug().Printf("stages event %d.", stages);*/
 }
 
 void Board::OnTimeRender(wxTimerEvent & event)
@@ -184,10 +200,10 @@ void Board::Moving(Tank * tank, bool direction)
 {
 	//wxMessageOutputDebug().Printf("Move Initiated\n");
 	if (!direction) {
-		tank->Move(GetClientSize().GetWidth(),direction);
+		tank->Move(GetClientSize().GetWidth(),direction,obstacle);
 	}
 	else if (direction) {
-		tank->Move(GetClientSize().GetWidth(),direction);
+		tank->Move(GetClientSize().GetWidth(),direction, obstacle);
 	}
 	//this->Update();
 	//this->Refresh(true);
@@ -213,6 +229,10 @@ void Board::GameOver(wxString winner)
 		delete tanks.back();
 		tanks.pop_back();
 	}
+	while (!obstacle.empty()) {
+		delete obstacle.back();
+		obstacle.pop_back();
+	}
 
 	parentFrame->ShowOver(winner);
 
@@ -227,12 +247,35 @@ void Board::InitMode1(wxVector <int> choosen)
 	turn = 0;
 	t = 1;
 
+	obstacle.push_back(new Building(910,1000));
+	for (int i = 30; i < 700; i+=10)
+	{
+		//wxMessageOutputDebug().Printf("%d",i);
+		if (rand() % 4 == 0) {
+			obstacle.push_back(new Bush(i, 1000));
+			i += 100;
+		}
+	}
+
+	for (int i = 1170; i < 1840; i += 10)
+	{
+		//wxMessageOutputDebug().Printf("%d", i);
+		if (rand() % 4 == 0) {
+			obstacle.push_back(new Bush(i, 1000));
+			i += 100;
+		}
+	}
+	
 	int x;
 	//inisialisasi tank
 	switch (choosen[0])
 	{
 	case 0:
 		tanks.push_back(new Tiger_1(5, 1000));
+		break;
+	case 1:
+		tanks.push_back(new Tiger_2(5, 1000));
+		break;
 	default:
 		break;
 	}
@@ -241,6 +284,10 @@ void Board::InitMode1(wxVector <int> choosen)
 	{
 	case 0:
 		tanks.push_back(new Tiger_1(1600, 1000, false));
+		break;
+	case 1:
+		tanks.push_back(new Tiger_2(1600, 1000, false));
+		break;
 	default:
 		break;
 	}
@@ -266,4 +313,8 @@ Board::~Board()
 		delete tanks.back();
 		tanks.pop_back();
 	}
+	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
+	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
+	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
+	Unbind(wxEVT_TIMER, &Board::OnTimeRender, this, TIMER2_ID);
 }

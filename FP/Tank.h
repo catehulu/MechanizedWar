@@ -3,10 +3,12 @@
 #include <wx\dcclient.h>
 #include "wx/dcbuffer.h"
 #include "Weapon.h"
+#include "wx/graphics.h"
 #include "BasicWeapon.h"
 #include "SniperWeapon.h"
 #include "ExplosiveWeapon.h"
 #include "resource.h"
+#include "Obstacle.h"
 class Tank
 {
 public:
@@ -14,7 +16,7 @@ public:
 	void Draw(wxBufferedPaintDC &dc);
 	void DrawVelocity(wxBufferedPaintDC &dc);
 	void DrawCurrentWeapon(wxBufferedPaintDC &dc);
-	virtual void Move(int maxX,bool direction) = 0;
+	virtual void Move(int maxX,bool direction, wxVector<Obstacle*> obstacle) = 0;
 	void Rotate(int amount);
 	void SetBodyImage(wxImage res);
 	void SetGunImage(wxImage res);
@@ -23,6 +25,7 @@ public:
 	wxImage GetBodyImage();
 	wxImage GetGunImage();
 	virtual bool checkCollision(int x, int y);
+	virtual bool checkCollisionObstacle(Obstacle* obstalce);
 	virtual bool tankArea(int x,int y,int weapon);
 	bool changeHealth(int x);
 	Weapon* getWeapon();
@@ -38,17 +41,17 @@ public:
 	void sety(int y);
 
 protected:
-	int x;
-	int y;
+	double x;
+	double y;
 	Weapon *weapon;
 	wxVector <Weapon* > armoury;
 	int ammo[3];
 	int equipedWeapon = 0;
 	int height,width;
-	int speed;
-	int gunx;
-	int guny;
-	int angle=0;
+	double speed;
+	double gunx;
+	double guny;
+	double angle=0;
 	int maxhealth;
 	int currhealth;
 private:
@@ -58,5 +61,7 @@ private:
 	wxImage gun;
 	wxBitmap bodybmp;
 	wxBitmap gunbmp;
+	wxGraphicsBitmap bodygbmp;
+	wxGraphicsBitmap gungbmp;
 };
 
