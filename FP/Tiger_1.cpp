@@ -10,7 +10,18 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 	currhealth = 260;
 	height = 49;
 	width = 135;
-	weapon = new Weapon(5, gunx, guny, angle);
+	equipedWeapon = 0;
+
+	//inisialisasi senajata
+	armoury.push_back(new BasicWeapon(5, gunx, guny, angle));
+	armoury.push_back(new SniperWeapon(5, gunx, guny, angle));
+	armoury.push_back(new ExplosiveWeapon(5, gunx, guny, angle));
+
+	ammo[0] = 99999;
+	ammo[1] = 20;
+	ammo[2] = 10;
+
+	weapon = armoury[0];
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
@@ -43,4 +54,8 @@ void Tiger_1::Move(int maxX, bool direction)
 Tiger_1::~Tiger_1()
 {
 	delete weapon;
+	for (int i = 0; i < armoury.size(); i++)
+	{
+		delete armoury[i];
+	}
 }

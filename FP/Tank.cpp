@@ -99,6 +99,37 @@ void Tank::DrawVelocity(wxBufferedPaintDC & dc)
 	weapon->setV(tv);
 }
 
+void Tank::DrawCurrentWeapon(wxBufferedPaintDC & dc)
+{
+	dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
+	wxFont font(12, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+	dc.SetFont(font);
+	wxString x;
+	wxString ammo;
+	switch (equipedWeapon)
+	{
+	case 0:
+		x = "Normal Rounds";
+		break;
+	case 1:
+		x = "Armour Piercing Rounds";
+		break;
+	case 2:
+		x = "High Explosive Rounds";
+		break;
+	default:
+		break;
+	}
+	if (this->ammo[equipedWeapon] == 0)
+		ammo = "Out of Ammo!";
+	else
+		ammo << this->ammo[equipedWeapon];
+
+	dc.DrawText(x, wxPoint(10, 100));
+	dc.DrawText(ammo, wxPoint(10, 120));
+}
+
 void Tank::Rotate(int amount)
 {
 	angle += amount;
@@ -149,13 +180,26 @@ bool Tank::checkCollision(int x, int y)
 		return true;
 }
 
-bool Tank::tankArea(int x, int y)
+bool Tank::tankArea(int x, int y,int weapon)
 {
-	if ((x >= this->x && x <= this->x + this->width)
-		&& (y >= this->y && y <= this->y + this->width))
-		return true;
-	else
-		return false;
+	if (weapon == 2) {
+		for (int i = 0; i < 3; i++)
+		{
+			if ((x - 10 + 10 * i >= this->x && x - 10 + 10 * i <= this->x + this->width)
+				&& (y >= this->y && y <= this->y + this->width))
+				return true;
+			else
+				return false;
+		}
+	}
+	else {
+		if ((x >= this->x && x <= this->x + this->width)
+			&& (y >= this->y && y <= this->y + this->width))
+			return true;
+		else
+			return false;
+	}
+
 }
 
 bool Tank::changeHealth(int x)
@@ -174,6 +218,31 @@ Weapon* Tank::getWeapon()
 	return this->weapon;
 }
 
+void Tank::changeWeapon(int i)
+{
+	i--;
+	equipedWeapon = i;
+	weapon = armoury[equipedWeapon];
+}
+
+int Tank::ammoCheck()
+{
+	return ammo[equipedWeapon];
+}
+
+void Tank::ammoReduce()
+{
+	ammo[equipedWeapon]--;
+}
+
+void Tank::initiateShooting()
+{
+	weapon->setX(gunx);
+	weapon->setY(guny);
+	weapon->setAngle(angle);
+	weapon->reset();
+}
+
 Tank::~Tank()
 {
 	delete weapon;
@@ -187,6 +256,11 @@ int Tank::getX()
 int Tank::getY()
 {
 	return this->y;
+}
+
+int Tank::getEquiped()
+{
+	return equipedWeapon;
 }
 
 void Tank::setX(int x)

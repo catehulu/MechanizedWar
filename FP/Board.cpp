@@ -35,8 +35,10 @@ void Board::OnPaint(wxPaintEvent & event)
 			this->tanks[i]->Draw(pdc);
 	}
 	this->map->Draw(pdc,counter,stages);
-	if (stages == 2)
+	if (stages == 2) {
 		tanks[turn]->DrawVelocity(pdc);
+		tanks[turn]->DrawCurrentWeapon(pdc);
+	}
 	//menggambar peluru jika ada kondisi menembak
 	if (stages == 3) {
 		/*wxMessageOutputDebug().Printf("----------Aiming stats---------");
@@ -45,7 +47,7 @@ void Board::OnPaint(wxPaintEvent & event)
 		{
 			if (i == turn || tanks[i] == nullptr)
 				continue;
-			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy())) {
+			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy(), tanks[turn]->getEquiped())) {
 				if (tanks[i]->changeHealth(tanks[turn]->getWeapon()->getDmg())) {
 					if (!tanks[i]->GetDirection())
 						team1--;
@@ -55,11 +57,10 @@ void Board::OnPaint(wxPaintEvent & event)
 					delete tanks[i];
 					tanks[i] = nullptr;
 				}
-				tanks[turn]->getWeapon()->reset();
 				hit = 0;
 			}
 		}
-		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit) {
+		if (tanks[turn]->checkCollision(GetClientSize().GetWidth(), 1000) && hit && tanks[turn]->ammoCheck()) {
 			this->tanks[turn]->getWeapon()->Move(tanks[turn]->GetDirection(), t);
 			this->tanks[turn]->getWeapon()->Draw(pdc); //draw bullets
 			t++;
@@ -110,7 +111,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			break;
 		case WXK_SPACE:
 			stages++;
-			Aiming(tanks[turn], tanks[turn]->GetDirection());
+			shot = 1;
 			tanks[turn]->getWeapon()->setV(0);
 			break;
 		default:
@@ -133,20 +134,20 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case 'S':
 			tanks[turn]->Rotate(-1);
 			break;
-		/*case 'a':
-		case 'A':
-			v -= 5;
-			if (v < 0)
-				v = 0;
-			tanks[turn]->getWeapon()->setV(v);
+		case '1':
+			tanks[turn]->changeWeapon(1);
 			break;
-		case 'd':
-		case 'D':
-			v += 5;
-			tanks[turn]->getWeapon()->setV(v);
-			break;*/
+		case '2':
+			tanks[turn]->changeWeapon(2);
+			break;
+		case '3':
+			tanks[turn]->changeWeapon(3);
+			break;
 		case WXK_SPACE:
 			stages++;
+			tanks[turn]->ammoReduce();
+			tanks[turn]->initiateShooting();
+			Shooting(tanks[turn], tanks[turn]->GetDirection());
 			break;
 		default:
 			event.Skip();
@@ -192,9 +193,8 @@ void Board::Moving(Tank * tank, bool direction)
 	//this->Refresh(true);
 }
 
-void Board::Aiming(Tank * tank, bool direction)
+void Board::Shooting(Tank * tank, bool direction)
 {
-	shot = 1;
 	if (!direction) {
 		tank->getWeapon()->setX(tank->getX());
 		tank->getWeapon()->setY(tank->getY());

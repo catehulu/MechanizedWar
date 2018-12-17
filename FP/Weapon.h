@@ -6,35 +6,24 @@
 class Weapon
 {
 public:
-	Weapon(int v,int x,int y,int angle);
-	void Draw(wxBufferedPaintDC &dc);
-	void Move(bool direction,int t);
-	int getX();
-	int getY();
-	int getV();
-	int getDmg();
-	int getXS();
-	int getYS();
-	int getTx();
-	int getTy();
-	void setX(int x);
-	void setY(int y);
-	void setDmg(int dmg);
-	void setV(int v);
-	void setTx(int tx);
-	void setTy(int ty);
-	void setAngle(int angle);
-	void reset();
+	Weapon();
+	virtual void Draw(wxBufferedPaintDC &dc) = 0;
+	virtual void Move(bool direction,int t) = 0;
+	virtual int getX() = 0;
+	virtual int getY() = 0;
+	virtual int getV() = 0;
+	virtual int getDmg() = 0;
+	virtual int getTx() = 0;
+	virtual int getTy() = 0;
+	virtual void setX(int x) = 0;
+	virtual void setY(int y) = 0;
+	virtual void setDmg(int dmg) = 0;
+	virtual void setV(int v) = 0;
+	virtual void setTx(int tx) = 0;
+	virtual void setTy(int ty) = 0;
+	virtual void setAngle(int angle) = 0;
+	virtual void reset() = 0;
 	~Weapon();
-private:
-	int tx;//posisi x temporary senjata
-	int ty;//posisi y temporary senjata
-	int x;//posisi x senjata
-	int y;//posisi y senjata
-	int size;
-	int v = 500;
-	int damage = 100;
-	const double g = 0.11;//konstanta gravitasi
-	int angle;
+
 };
 

@@ -23,8 +23,6 @@ ChooseTank::ChooseTank(Game* parent) :
 
 ChooseTank::~ChooseTank()
 {
-	delete parentFrame;
-	delete choosetank;
 }
 void ChooseTank::OnClick(wxMouseEvent & event)
 {

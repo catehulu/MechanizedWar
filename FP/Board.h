@@ -15,7 +15,7 @@ public:
 	void OnTimer(wxTimerEvent& event);
 	void OnTimeRender(wxTimerEvent& event);
 	void Moving(Tank* tank, bool direction);
-	void Aiming(Tank* tank, bool direction);
+	void Shooting(Tank* tank, bool direction);
 	void GameOver(wxString winner);
 	void InitMode1(wxVector <int> choosen);
 	~Board();
