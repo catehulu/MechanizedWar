@@ -64,50 +64,49 @@ void ChooseTank::OnPaint(wxPaintEvent & event)
 	{
 		if (i == 0) {
 			x = 232;
-			y = 436;
+			y = 536;
 		}
 		else
 		{
 			x = 1304;
-			y = 436;
+			y = 536;
 		}
 		switch (cycle[i])
 		{
 		case 0:
 			tbody = wxBitmap(wxBITMAP_PNG(#122)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			tbody.Rescale(0.25*tbody.GetWidth(), 0.25*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;
 		case 1:
 			tbody = wxBitmap(wxBITMAP_PNG(#121)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			tbody.Rescale(0.2*tbody.GetWidth(), 0.2*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;
 		case 2:
 			tbody = wxBitmap(wxBITMAP_PNG(#123)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			tbody.Rescale(0.2*tbody.GetWidth(), 0.2*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;
 		case 3:
 			tbody = wxBitmap(wxBITMAP_PNG(#124)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
-			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			tbody.Rescale(0.25*tbody.GetWidth(), 0.25*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x+40, y), true);
 			break;
 		case 4:
 			tbody = wxBitmap(wxBITMAP_PNG(#127)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
-			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			tbody.Rescale(0.3*tbody.GetWidth(), 0.3*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x+30, y), true);
 			break;
 		case 5:
 			tbody = wxBitmap(wxBITMAP_PNG(#126)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			tbody.Rescale(0.2*tbody.GetWidth(), 0.2*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;
 		case 6:
 			tbody = wxBitmap(wxBITMAP_PNG(#125)).ConvertToImage();
-			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
-			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
-			break;
+			tbody.Rescale(0.3*tbody.GetWidth(), 0.3*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x+10, y), true);
 		default:
 			break;
 		}
