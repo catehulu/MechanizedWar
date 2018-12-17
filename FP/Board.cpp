@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "wx/dcbuffer.h"
+#include "resource.h"
 #define TIMER1_ID 12121
 #define TIMER2_ID 12212
 
@@ -15,7 +16,7 @@ Board::Board(Game *parent) :
 	//inisialisasi map
 	SetBackgroundColour(wxColour(*wxWHITE));
 	map = new Map(0, 1000, 1920, 15);
-
+	imgpic = new wxBitmap(wxBITMAP_PNG(#131));
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Bind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
@@ -29,6 +30,7 @@ void Board::OnPaint(wxPaintEvent & event)
 	wxBufferedPaintDC pdc(this);
 	pdc.SetBrush(wxBrush(wxColor(*wxWHITE)));
 	pdc.DrawRectangle(wxPoint(0, 0), this->GetClientSize());
+	pdc.DrawBitmap(*imgpic, wxPoint(0, 0));
 	//menggambar tank
 	for (int i = 0; i < tanks.size(); i++) {
 		if(tanks[i] != nullptr)
@@ -270,7 +272,7 @@ Board::~Board()
 	delete timer;
 	delete timer2;
 	delete map;
-	delete tankpic;
+	delete imgpic;
 	while (!tanks.empty()) {
 		delete tanks.back();
 		tanks.pop_back();

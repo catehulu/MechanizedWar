@@ -9,11 +9,9 @@ END_EVENT_TABLE()
 GameOver::GameOver(Game* parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
-	wxImageHandler *jpgloader = new wxJPEGHandler();
-	wxImage::AddHandler(jpgloader);
-	wxImage image(wxT("Game Over.jpg"),
-		wxBITMAP_TYPE_JPEG);
-	gaameover = new wxBitmap(image);
+	wxImage temp = wxBitmap(wxBITMAP_PNG(#120)).ConvertToImage();
+	temp.Rescale(1920, 1080, wxIMAGE_QUALITY_HIGH);
+	gaameover = new wxBitmap(temp);
 
 	timer = new wxTimer(this, 1000);
 }

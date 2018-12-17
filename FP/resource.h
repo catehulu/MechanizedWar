@@ -20,6 +20,23 @@
 #define AP_SHELL						116
 #define HE_SHELL						117
 #define MAIN_MENU						118
+#define TANK_MENU						119
+#define OVER_MENU						120
+#define SEL_KNTGR						121	
+#define SEL_TIGER						122	
+#define SEL_PNTHR						123	
+#define SEL_KV2							124
+#define SEL_T34							125
+#define SEL_PRSHG						126	
+#define SEL_SHRMN						127	
+#define T_TRAPS1						128
+#define T_TRAPS2						129
+#define T_TRAPS3						130
+#define MAIN_BG							131
+#define AP_AMMO							132
+#define HE_AMMO							133
+
+
 
 // Next default values for new objects
 // 
