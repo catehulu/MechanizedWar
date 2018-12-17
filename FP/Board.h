@@ -5,9 +5,15 @@
 #include "Weapon.h"
 #include "Tiger_1.h"
 #include "Tiger_2.h"
+#include "Panther.h"
+#include "KV_2.h"
+#include "Sherman.h"
+#include "Pershing.h"
+#include "T_34.h"
 #include "Obstacle.h"
 #include "Building.h"
 #include "Bush.h"
+#include "TankTraps.h"
 #include <vector>
 #include <wx/wx.h>
 #include <time.h>

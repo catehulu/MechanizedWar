@@ -5,6 +5,15 @@
 Tank::Tank(int gunx, int guny)
 	:gunx(gunx), guny(guny)
 {	
+	wxImageHandler* pngload = new wxPNGHandler();
+	wxImage::AddHandler(pngload);
+
+	apicon = wxBitmap(wxBITMAP_PNG(#132)).ConvertToImage();
+	heicon = wxBitmap(wxBITMAP_PNG(#133)).ConvertToImage();
+
+	apicon.Rescale(35, 50, wxIMAGE_QUALITY_HIGH);
+	heicon.Rescale(35, 50, wxIMAGE_QUALITY_HIGH);
+
 }
 
 void Tank::Draw(wxBufferedPaintDC & dc)
@@ -104,33 +113,54 @@ void Tank::DrawVelocity(wxBufferedPaintDC & dc)
 
 void Tank::DrawCurrentWeapon(wxBufferedPaintDC & dc)
 {
-	dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	wxImage tmp;
+	dc.SetBrush(wxBrush(wxColour(*wxBLACK)));
 	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
-	wxFont font(12, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
+	wxFont font(16, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	dc.SetFont(font);
-	wxString x;
 	wxString ammo;
 	switch (equipedWeapon)
 	{
 	case 0:
-		x = "Normal Rounds";
-		break;
-	case 1:
-		x = "Armour Piercing Rounds";
+		tmp = apicon;
 		break;
 	case 2:
-		x = "High Explosive Rounds";
+		tmp = heicon;
 		break;
 	default:
 		break;
 	}
-	if (this->ammo[equipedWeapon] == 0)
+	if (this->ammo[equipedWeapon] <= 0)
 		ammo = "Out of Ammo!";
 	else
 		ammo << this->ammo[equipedWeapon];
 
-	dc.DrawText(x, wxPoint(10, 100));
-	dc.DrawText(ammo, wxPoint(10, 120));
+	dc.DrawBitmap(tmp, wxPoint(10, 100));
+	dc.DrawText(ammo, wxPoint(70, 100));
+}
+
+void Tank::Move(int maxX, bool direction, wxVector<Obstacle*> obstacle)
+{
+	int tempx = x;
+	if (!direction)
+		tempx += speed * -1;
+	else
+		tempx += speed;
+	for (int i = 0; i < obstacle.size(); i++)
+	{
+		if (obstacle[i] == nullptr)
+			continue;
+		if (obstacle[i]->intersect(tempx + width, this->y) || obstacle[i]->intersect(tempx, this->y)) {
+			return;
+		}
+	}
+	if (tempx + width >= maxX || tempx <= 0) {
+		return;
+	}
+	else
+	{
+		x = tempx;
+	}
 }
 
 void Tank::Rotate(int amount)
@@ -235,13 +265,19 @@ Weapon* Tank::getWeapon()
 void Tank::changeWeapon(int i)
 {
 	i--;
+	double tmp;
+	tmp = armoury[equipedWeapon]->getV();
 	equipedWeapon = i;
 	weapon = armoury[equipedWeapon];
+	weapon->setV(tmp);
 }
 
-int Tank::ammoCheck()
+bool Tank::ammoCheck()
 {
-	return ammo[equipedWeapon];
+	if (ammo[equipedWeapon]+1 <= 0)
+		return false;
+	else
+		return true;
 }
 
 void Tank::ammoReduce()
@@ -272,9 +308,24 @@ int Tank::getY()
 	return this->y;
 }
 
+int Tank::getWidth()
+{
+	return width;
+}
+
 int Tank::getEquiped()
 {
 	return equipedWeapon;
+}
+
+int Tank::getDmg()
+{
+	return damage;
+}
+
+void Tank::setDmg(int i)
+{
+	damage = i;
 }
 
 void Tank::setX(int x)

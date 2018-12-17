@@ -5,7 +5,7 @@ class Tiger_1 :
 {
 public:
 	Tiger_1(int x, int y, bool direction = true);
-	void Move(int maxX, bool direction, wxVector<Obstacle*> obstacle);
+	void specialEvent(int choose);
 	~Tiger_1();
 };
 

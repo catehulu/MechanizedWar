@@ -18,6 +18,12 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Bush.cpp" />
+    <ClCompile Include="TankTraps.cpp" />
+    <ClCompile Include="Panther.cpp" />
+    <ClCompile Include="KV_2.cpp" />
+    <ClCompile Include="Sherman.cpp" />
+    <ClCompile Include="Pershing.cpp" />
+    <ClCompile Include="T_34.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicWeapon.h" />
@@ -37,6 +43,12 @@
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="Bush.h" />
+    <ClInclude Include="TankTraps.h" />
+    <ClInclude Include="Panther.h" />
+    <ClInclude Include="KV_2.h" />
+    <ClInclude Include="Sherman.h" />
+    <ClInclude Include="Pershing.h" />
+    <ClInclude Include="T_34.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FP.rc" />

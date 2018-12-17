@@ -9,8 +9,9 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 	maxhealth = 260;
 	currhealth = 260;
 	height = 49;
-	width = 135;
+	width = 107;
 	equipedWeapon = 0;
+	damage = 45;
 
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
@@ -24,6 +25,10 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 	armoury.push_back(new SniperWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 	armoury.push_back(new ExplosiveWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 
+	armoury[0]->setDmg(armoury[0]->getDmg() + damage);
+	armoury[1]->setDmg(armoury[1]->getDmg() + damage);
+	armoury[2]->setDmg(armoury[2]->getDmg() + damage);
+
 	ammo[0] = 100;
 	ammo[1] = 20;
 	ammo[2] = 10;
@@ -36,28 +41,11 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 	this->x = x;
 }
 
-void Tiger_1::Move(int maxX, bool direction, wxVector<Obstacle*> obstacle)
+void Tiger_1::specialEvent(int damage)
 {
-	int tempx = x;
-	if (!direction)
-		tempx += speed * -1;
-	else
-		tempx += speed;
-	for (int i = 0; i < obstacle.size(); i++)
-	{
-		if (obstacle[i] == nullptr)
-			continue;
-		if (obstacle[i]->intersect(tempx + width, this->y) || obstacle[i]->intersect(tempx, this->y)) {
-			return;
-		}
-	}
-	if (tempx + width >= maxX || tempx <= 0) {
+	if (damage < 5)
 		return;
-	}
-	else
-	{
-		x = tempx;
-	}
+	currhealth += 0.4 * damage;
 }
 
 Tiger_1::~Tiger_1()

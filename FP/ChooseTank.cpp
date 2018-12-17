@@ -74,12 +74,37 @@ void ChooseTank::OnPaint(wxPaintEvent & event)
 		switch (cycle[i])
 		{
 		case 0:
-			tbody = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
+			tbody = wxBitmap(wxBITMAP_PNG(#122)).ConvertToImage();
 			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;
 		case 1:
-			tbody = wxBitmap(wxBITMAP_PNG(#102)).ConvertToImage();
+			tbody = wxBitmap(wxBITMAP_PNG(#121)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 2:
+			tbody = wxBitmap(wxBITMAP_PNG(#123)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 3:
+			tbody = wxBitmap(wxBITMAP_PNG(#124)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 4:
+			tbody = wxBitmap(wxBITMAP_PNG(#127)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 5:
+			tbody = wxBitmap(wxBITMAP_PNG(#126)).ConvertToImage();
+			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
+			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
+			break;
+		case 6:
+			tbody = wxBitmap(wxBITMAP_PNG(#125)).ConvertToImage();
 			tbody.Rescale(0.1*tbody.GetWidth(), 0.1*tbody.GetHeight());
 			pdc.DrawBitmap(tbody, wxPoint(x, y), true);
 			break;

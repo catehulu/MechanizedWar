@@ -15,6 +15,8 @@ public:
 	int getDmg();
 	int getTx();
 	int getTy();
+	int getCol();
+	void setCol(int x);
 	void setX(int x);
 	void setY(int y);
 	void setDmg(int dmg);
@@ -38,8 +40,9 @@ private:
 	double x_changes = 0;//perubahan y lama
 	int size;
 	double v = 0;
-	int damage = 100;
+	int damage;
 	const double g = 0.11;//konstanta gravitasi
 	int angle;
+	int col = 1;
 };
 

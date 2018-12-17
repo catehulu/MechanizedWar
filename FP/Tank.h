@@ -16,7 +16,8 @@ public:
 	void Draw(wxBufferedPaintDC &dc);
 	void DrawVelocity(wxBufferedPaintDC &dc);
 	void DrawCurrentWeapon(wxBufferedPaintDC &dc);
-	virtual void Move(int maxX,bool direction, wxVector<Obstacle*> obstacle) = 0;
+	void Move(int maxX,bool direction, wxVector<Obstacle*> obstacle);
+	virtual void specialEvent(int choose) = 0;
 	void Rotate(int amount);
 	void SetBodyImage(wxImage res);
 	void SetGunImage(wxImage res);
@@ -30,13 +31,16 @@ public:
 	bool changeHealth(int x);
 	Weapon* getWeapon();
 	void changeWeapon(int i);
-	int ammoCheck();
+	bool ammoCheck();
 	void ammoReduce();
 	void initiateShooting();
 	~Tank();
 	int getX();
 	int getY();
+	int getWidth();
 	int getEquiped();
+	int getDmg();
+	void setDmg(int i);
 	void setX(int x);
 	void sety(int y);
 
@@ -54,9 +58,12 @@ protected:
 	double angle=0;
 	int maxhealth;
 	int currhealth;
+	int damage;
 private:
 	int add = 1;
 	bool direction;
+	wxImage apicon;
+	wxImage heicon;
 	wxImage body;
 	wxImage gun;
 	wxBitmap bodybmp;

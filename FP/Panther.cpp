@@ -1,25 +1,25 @@
-#include "Tiger_2.h"
+#include "Panther.h"
 
 
 
-Tiger_2::Tiger_2(int x, int y, bool direction)
-	:Tank(30, 10)
+Panther::Panther(int x, int y, bool direction)
+	:Tank(41,10)
 {
-	speed = 5;
-	maxhealth = 350;
-	currhealth = 350;
-	height = 51;
-	width = 119;
+	speed = 6;
+	maxhealth = 220;
+	currhealth = 220;
+	height = 49;
+	width = 114;
 	equipedWeapon = 0;
-	damage = 80;
+	damage = 40;
 
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
 
-	wxImage tbody = wxBitmap(wxBITMAP_PNG(#102)).ConvertToImage();
-	wxImage tgun = wxBitmap(wxBITMAP_PNG(#103)).ConvertToImage();
-	tbody.Rescale(width, height, wxIMAGE_QUALITY_HIGH);
-	tgun.Rescale(73, 10, wxIMAGE_QUALITY_HIGH);
+	wxImage tbody = wxBitmap(wxBITMAP_PNG(#114)).ConvertToImage();
+	wxImage tgun = wxBitmap(wxBITMAP_PNG(#115)).ConvertToImage();
+	tbody.Rescale(114, 49, wxIMAGE_QUALITY_HIGH);
+	tgun.Rescale(79, 10, wxIMAGE_QUALITY_HIGH);
 	//inisialisasi senajata
 	armoury.push_back(new BasicWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 	armoury.push_back(new SniperWeapon(30, gunx, guny, angle, tgun.GetHeight()));
@@ -41,15 +41,20 @@ Tiger_2::Tiger_2(int x, int y, bool direction)
 	this->x = x;
 }
 
-void Tiger_2::specialEvent(int dmg)
+void Panther::specialEvent(int choose)
 {
-	if (dmg < 5)
-		return;
-	currhealth += dmg;
-
+	if (choose == 3)
+		speed = 3;
+	if (choose == 4)
+		speed = 6;
 }
 
-Tiger_2::~Tiger_2()
+
+Panther::~Panther()
 {
 	delete weapon;
+	for (int i = 0; i < armoury.size(); i++)
+	{
+		delete armoury[i];
+	}
 }

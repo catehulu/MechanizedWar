@@ -55,6 +55,9 @@ void Board::OnPaint(wxPaintEvent & event)
 			if (i == turn || tanks[i] == nullptr)
 				continue;
 			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy(), tanks[turn]->getEquiped())) {
+				if (rand() % 4 == 0) {
+					tanks[i]->specialEvent(tanks[turn]->getWeapon()->getDmg());
+				}
 				if (tanks[i]->changeHealth(tanks[turn]->getWeapon()->getDmg())) {
 					if (!tanks[i]->GetDirection())
 						team1--;
@@ -71,7 +74,7 @@ void Board::OnPaint(wxPaintEvent & event)
 		{
 			if (obstacle[i] == nullptr)
 				continue;
-			if (tanks[turn]->checkCollisionObstacle(obstacle[i])) {
+			if (tanks[turn]->checkCollisionObstacle(obstacle[i]) && tanks[turn]->getWeapon()->getCol()) {
 				hit = 0;
 				if (obstacle[i]->healthChange(tanks[turn]->getWeapon()->getDmg())) {
 					delete obstacle[i];
@@ -109,16 +112,17 @@ void Board::OnPaint(wxPaintEvent & event)
 			}
 		}
 	}
-	
-
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
 {
+	int special = rand() % 4;
 	int keycode = event.GetKeyCode();
 	//wxMessageOutputDebug().Printf("%d",keycode);
 	if (stages == 1) { //bagian bergerak,tekan spasi pindah stages
 		//wxMessageOutputDebug().Printf("Move");
+		if (special == 0)
+			tanks[turn]->specialEvent(3 + rand() % 2);
 		switch (keycode)
 		{
 		case 'a':
@@ -164,6 +168,8 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			stages++;
 			tanks[turn]->ammoReduce();
 			tanks[turn]->initiateShooting();
+			if (special == 0)
+				tanks[turn]->specialEvent(0);
 			Shooting(tanks[turn], tanks[turn]->GetDirection());
 			break;
 		default:
@@ -218,7 +224,7 @@ void Board::Shooting(Tank * tank, bool direction)
 		tank->getWeapon()->setY(tank->getY());
 	}
 	else {
-		tank->getWeapon()->setX(tank->getX() + 80);
+		tank->getWeapon()->setX(tank->getX() + tank->getWidth());
 		tank->getWeapon()->setY(tank->getY());
 	}
 }
@@ -250,6 +256,8 @@ void Board::InitMode1(wxVector <int> choosen)
 	t = 1;
 
 	obstacle.push_back(new Building(910,1000));
+	obstacle.push_back(new TankTraps(870,1000));
+	obstacle.push_back(new TankTraps(1020,1000));
 	for (int i = 30; i < 700; i+=10)
 	{
 		//wxMessageOutputDebug().Printf("%d",i);
@@ -267,8 +275,7 @@ void Board::InitMode1(wxVector <int> choosen)
 			i += 100;
 		}
 	}
-	
-	int x;
+
 	//inisialisasi tank
 	switch (choosen[0])
 	{
@@ -277,6 +284,21 @@ void Board::InitMode1(wxVector <int> choosen)
 		break;
 	case 1:
 		tanks.push_back(new Tiger_2(5, 1000));
+		break;
+	case 2:
+		tanks.push_back(new Panther(5, 1000));
+		break;
+	case 3:
+		tanks.push_back(new KV_2(5, 1000));
+		break;
+	case 4:
+		tanks.push_back(new Sherman(5, 1000));
+		break;
+	case 5:
+		tanks.push_back(new Pershing(5, 1000));
+		break;
+	case 6:
+		tanks.push_back(new T_34(5, 1000));
 		break;
 	default:
 		break;
@@ -289,6 +311,21 @@ void Board::InitMode1(wxVector <int> choosen)
 		break;
 	case 1:
 		tanks.push_back(new Tiger_2(1600, 1000, false));
+		break;
+	case 2:
+		tanks.push_back(new Panther(1600, 1000, false));
+		break;
+	case 3:
+		tanks.push_back(new KV_2(1600, 1000, false));
+		break;
+	case 4:
+		tanks.push_back(new Sherman(1600, 1000, false));
+		break;
+	case 5:
+		tanks.push_back(new Pershing(1600, 1000, false));
+		break;
+	case 6:
+		tanks.push_back(new T_34(1600, 1000, false));
 		break;
 	default:
 		break;

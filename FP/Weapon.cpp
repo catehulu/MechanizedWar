@@ -101,6 +101,16 @@ int Weapon::getTy()
 	return ty;
 }
 
+int Weapon::getCol()
+{
+	return col;
+}
+
+void Weapon::setCol(int x)
+{
+	col = x;
+}
+
 void Weapon::setV(double v)
 {
 	this->v = v;
@@ -125,6 +135,7 @@ void Weapon::reset()
 {
 	tx = x;
 	ty = y;
+	col = 1;
 }
 
 double Weapon::getV()

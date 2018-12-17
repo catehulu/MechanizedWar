@@ -90,7 +90,6 @@ void Game::ShowBoard(wxVector <int> choosen, int mode)
 	this->boardPanel->Show(true);
 	this->boardPanel->SetFocusFromKbd();
 
-
 	fitWindowSize();
 }
 

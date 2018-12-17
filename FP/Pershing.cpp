@@ -1,25 +1,25 @@
-#include "Tiger_2.h"
+#include "Pershing.h"
 
 
 
-Tiger_2::Tiger_2(int x, int y, bool direction)
-	:Tank(30, 10)
+Pershing::Pershing(int x, int y, bool direction)
+	:Tank(30,10)
 {
 	speed = 5;
-	maxhealth = 350;
-	currhealth = 350;
-	height = 51;
-	width = 119;
+	maxhealth = 310;
+	currhealth = 310;
+	height = 45;
+	width = 109;
 	equipedWeapon = 0;
-	damage = 80;
+	damage = 60;
 
 	wxImageHandler* pngload = new wxPNGHandler();
 	wxImage::AddHandler(pngload);
 
-	wxImage tbody = wxBitmap(wxBITMAP_PNG(#102)).ConvertToImage();
-	wxImage tgun = wxBitmap(wxBITMAP_PNG(#103)).ConvertToImage();
-	tbody.Rescale(width, height, wxIMAGE_QUALITY_HIGH);
-	tgun.Rescale(73, 10, wxIMAGE_QUALITY_HIGH);
+	wxImage tbody = wxBitmap(wxBITMAP_PNG(#104)).ConvertToImage();
+	wxImage tgun = wxBitmap(wxBITMAP_PNG(#105)).ConvertToImage();
+	tbody.Rescale(109, 45, wxIMAGE_QUALITY_HIGH);
+	tgun.Rescale(78, 9, wxIMAGE_QUALITY_HIGH);
 	//inisialisasi senajata
 	armoury.push_back(new BasicWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 	armoury.push_back(new SniperWeapon(30, gunx, guny, angle, tgun.GetHeight()));
@@ -41,15 +41,13 @@ Tiger_2::Tiger_2(int x, int y, bool direction)
 	this->x = x;
 }
 
-void Tiger_2::specialEvent(int dmg)
+void Pershing::specialEvent(int choose)
 {
-	if (dmg < 5)
-		return;
-	currhealth += dmg;
-
+	if (choose == 0)
+		weapon->setCol(0);
 }
 
-Tiger_2::~Tiger_2()
+
+Pershing::~Pershing()
 {
-	delete weapon;
 }
