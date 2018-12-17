@@ -15,5 +15,10 @@ private:
 	int health = 1000;
 	int maxhealth = 1000;
 	int height;
+	int ynow;
+
+	wxImage state1;
+	wxImage state2;
+	wxImage state3;
 };
 

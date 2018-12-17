@@ -8,7 +8,17 @@ Building::Building(int x, int y)
 	y -= height;
 	this->y = y;
 	this->x = x;
+	ynow = y;
 	building = new wxRect(x, y, 100, height);
+
+	state1 = wxBitmap(wxBITMAP_PNG(#134)).ConvertToImage();
+	state2 = wxBitmap(wxBITMAP_PNG(#135)).ConvertToImage();
+	state3 = wxBitmap(wxBITMAP_PNG(#136)).ConvertToImage();
+
+	state1.Rescale(100, 250, wxIMAGE_QUALITY_HIGH);
+	state2.Rescale(100, 150, wxIMAGE_QUALITY_HIGH);
+	state3.Rescale(100, 100, wxIMAGE_QUALITY_HIGH);
+
 }
 
 bool Building::intersect(int x, int y)
@@ -24,14 +34,17 @@ bool Building::healthChange(int dmg)
 	health -= dmg;
 	if (health >= 800) {
 		building->SetHeight(height);
+		ynow = y;
 	}
 	else if (health >= 500) {
+		ynow = y + 100;
 		building->SetHeight(height - 100);
-		building->SetY(y + 100);
+		building->SetY(ynow);
 	}
 	else {
+		ynow = y + 150;
 		building->SetHeight(height - 200);
-		building->SetY(y + 200);
+		building->SetY(ynow);
 	}
 	if (health < 0) {
 		health = 0;
@@ -44,13 +57,12 @@ bool Building::healthChange(int dmg)
 
 void Building::draw(wxBufferedPaintDC & dc)
 {
-	if(health >= 800)
-		dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
+	if (health >= 800)
+		dc.DrawBitmap(state1, wxPoint(x, ynow), true);
 	else if(health >= 500)
-		dc.SetBrush(wxBrush(wxColour(*wxYELLOW)));
+		dc.DrawBitmap(state2, wxPoint(x, ynow), true);
 	else
-		dc.SetBrush(wxBrush(wxColour(*wxRED)));
-	dc.DrawRectangle(*building);
+		dc.DrawBitmap(state3, wxPoint(x, ynow), true);
 }
 
 

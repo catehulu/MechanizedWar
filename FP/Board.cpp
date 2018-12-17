@@ -263,7 +263,7 @@ void Board::InitMode1(wxVector <int> choosen)
 		//wxMessageOutputDebug().Printf("%d",i);
 		if (rand() % 4 == 0) {
 			obstacle.push_back(new Bush(i, 1000));
-			i += 100;
+			i += 150;
 		}
 	}
 
@@ -272,7 +272,7 @@ void Board::InitMode1(wxVector <int> choosen)
 		//wxMessageOutputDebug().Printf("%d", i);
 		if (rand() % 4 == 0) {
 			obstacle.push_back(new Bush(i, 1000));
-			i += 100;
+			i += 150;
 		}
 	}
 
@@ -352,6 +352,11 @@ Board::~Board()
 		delete tanks.back();
 		tanks.pop_back();
 	}
+	while (!obstacle.empty()) {
+		delete obstacle.back();
+		obstacle.pop_back();
+	}
+
 	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
 	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);

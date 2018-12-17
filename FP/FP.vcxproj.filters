@@ -1,61 +1,231 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="BasicWeapon.cpp" />
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="ChooseTank.cpp" />
-    <ClCompile Include="ExplosiveWeapon.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameOver.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="SniperWeapon.cpp" />
-    <ClCompile Include="Tank.cpp" />
-    <ClCompile Include="Tiger_1.cpp" />
-    <ClCompile Include="Tiger_2.cpp" />
-    <ClCompile Include="Weapon.cpp" />
-    <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="Building.cpp" />
-    <ClCompile Include="Bush.cpp" />
-    <ClCompile Include="TankTraps.cpp" />
-    <ClCompile Include="Panther.cpp" />
-    <ClCompile Include="KV_2.cpp" />
-    <ClCompile Include="Sherman.cpp" />
-    <ClCompile Include="Pershing.cpp" />
-    <ClCompile Include="T_34.cpp" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicWeapon.h" />
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="ChooseTank.h" />
-    <ClInclude Include="ExplosiveWeapon.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameOver.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SniperWeapon.h" />
-    <ClInclude Include="Tank.h" />
-    <ClInclude Include="Tiger_1.h" />
-    <ClInclude Include="Tiger_2.h" />
-    <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Obstacle.h" />
-    <ClInclude Include="Building.h" />
-    <ClInclude Include="Bush.h" />
-    <ClInclude Include="TankTraps.h" />
-    <ClInclude Include="Panther.h" />
-    <ClInclude Include="KV_2.h" />
-    <ClInclude Include="Sherman.h" />
-    <ClInclude Include="Pershing.h" />
-    <ClInclude Include="T_34.h" />
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiger_1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChooseTank.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiger_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FP.rc" />
+    <ClInclude Include="Tank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiger_1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChooseTank.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiger_2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\assets\Konigstiger.png" />
-    <Image Include="..\assets\Konigstiger_gun.png" />
-    <Image Include="..\assets\tankpertamagede.png" />
+    <ResourceCompile Include="FP.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\assets\tankpertamagede.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Konigstiger_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Konigstiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M26_Pershing.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M26_Pershing_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Tiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Tiger_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\KV2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\KV2_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M4_Sherman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\M4_Sherman_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\T34.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\T34_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Panther.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Panther_gun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\AP.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\HE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\TankSelection.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\german_PantherAusfA.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\soviet_T34-76.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\allied_M4Sherman.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\allied_M26Pershing.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\soviet_KV2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\german_Tiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\german_Konigstiger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\GameOver.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\TankTraps1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\TankTraps2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\TankTraps3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\BG2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\APammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\HEammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Cathedral1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Cathedral2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Cathedral3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\assets\Grass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\assets\Sound\Damage.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\Engine.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\EngineStart.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\EngineStop.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\HEDamage.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\HOI4-Panzerlied.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\Non-damageShot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\Shoot.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\assets\Sound\WinSong.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

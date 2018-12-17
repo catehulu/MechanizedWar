@@ -12,4 +12,5 @@ public:
 private:
 	int x, y;
 	wxRect* bush;
+	wxImage bushes;
 };

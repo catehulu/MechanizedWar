@@ -72,9 +72,53 @@
     <ResourceCompile Include="FP.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\assets\allied_M26Pershing.png" />
+    <Image Include="..\assets\allied_M4Sherman.png" />
+    <Image Include="..\assets\AP.png" />
+    <Image Include="..\assets\APammo.png" />
+    <Image Include="..\assets\BG2.png" />
+    <Image Include="..\assets\Cathedral1.png" />
+    <Image Include="..\assets\Cathedral2.png" />
+    <Image Include="..\assets\Cathedral3.png" />
+    <Image Include="..\assets\GameOver.png" />
+    <Image Include="..\assets\german_Konigstiger.png" />
+    <Image Include="..\assets\german_PantherAusfA.png" />
+    <Image Include="..\assets\german_Tiger.png" />
+    <Image Include="..\assets\Grass.png" />
+    <Image Include="..\assets\HE.png" />
+    <Image Include="..\assets\HEammo.png" />
     <Image Include="..\assets\Konigstiger.png" />
     <Image Include="..\assets\Konigstiger_gun.png" />
+    <Image Include="..\assets\KV2.png" />
+    <Image Include="..\assets\KV2_gun.png" />
+    <Image Include="..\assets\M26_Pershing.png" />
+    <Image Include="..\assets\M26_Pershing_gun.png" />
+    <Image Include="..\assets\M4_Sherman.png" />
+    <Image Include="..\assets\M4_Sherman_gun.png" />
+    <Image Include="..\assets\Panther.png" />
+    <Image Include="..\assets\Panther_gun.png" />
+    <Image Include="..\assets\soviet_KV2.png" />
+    <Image Include="..\assets\soviet_T34-76.png" />
+    <Image Include="..\assets\T34.png" />
+    <Image Include="..\assets\T34_gun.png" />
     <Image Include="..\assets\tankpertamagede.png" />
+    <Image Include="..\assets\TankSelection.png" />
+    <Image Include="..\assets\TankTraps1.png" />
+    <Image Include="..\assets\TankTraps2.png" />
+    <Image Include="..\assets\TankTraps3.png" />
+    <Image Include="..\assets\Tiger.png" />
+    <Image Include="..\assets\Tiger_gun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\assets\Sound\Damage.wav" />
+    <Media Include="..\assets\Sound\Engine.wav" />
+    <Media Include="..\assets\Sound\EngineStart.wav" />
+    <Media Include="..\assets\Sound\EngineStop.wav" />
+    <Media Include="..\assets\Sound\HEDamage.wav" />
+    <Media Include="..\assets\Sound\HOI4-Panzerlied.wav" />
+    <Media Include="..\assets\Sound\Non-damageShot.wav" />
+    <Media Include="..\assets\Sound\Shoot.wav" />
+    <Media Include="..\assets\Sound\WinSong.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

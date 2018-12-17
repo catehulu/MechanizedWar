@@ -5,7 +5,13 @@
 Bush::Bush(int x, int y)
 {
 	y -= 40;
+	this->x = x;
+	this->y = y;
 	bush = new wxRect(x, y, 100, 40);
+	wxImageHandler* pngload = new wxPNGHandler();
+	wxImage::AddHandler(pngload);
+	bushes = wxBitmap(wxBITMAP_PNG(#137)).ConvertToImage();
+	bushes.Rescale(100, 40, wxIMAGE_QUALITY_HIGH);
 }
 
 bool Bush::intersect(int x, int y)
@@ -20,11 +26,11 @@ bool Bush::healthChange(int dmg)
 
 void Bush::draw(wxBufferedPaintDC & dc)
 {
-	dc.SetBrush(wxBrush(wxColour(*wxGREEN)));
-	dc.DrawRectangle(*bush);
+	dc.DrawBitmap(bushes, wxPoint(x, y));
 }
 
 
 Bush::~Bush()
 {
+	delete bush;
 }
