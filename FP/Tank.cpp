@@ -137,8 +137,8 @@ void Tank::Rotate(int amount)
 {
 	angle += amount;
 	//wxMessageOutputDebug().Printf("at %lf degree",this->angle);
-	if (angle > 365) angle = 0;
-	if (angle < 0) angle = 365;
+	if (angle > 30) angle = 30;
+	if (angle < 0) angle = 0;
 	weapon->setAngle(angle);
 }
 

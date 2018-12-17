@@ -4,7 +4,7 @@
 
 Building::Building(int x, int y)
 {
-	height = 200;
+	height = 250;
 	y -= height;
 	this->y = y;
 	this->x = x;
