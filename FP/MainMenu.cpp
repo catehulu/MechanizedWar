@@ -13,12 +13,13 @@ MainMenu::MainMenu(Game* parent) :
 	wxImage temp = wxBitmap(wxBITMAP_PNG(#118)).ConvertToImage();
 	temp.Rescale(1920, 1080, wxIMAGE_QUALITY_HIGH);
 	mainmenu = new wxBitmap(temp);
-
+	
 }
 
 
 MainMenu::~MainMenu()
 {
+
 }
 
 void MainMenu::OnClick(wxMouseEvent & event)

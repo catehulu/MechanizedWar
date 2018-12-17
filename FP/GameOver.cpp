@@ -45,7 +45,7 @@ void GameOver::OnPaint(wxPaintEvent & event)
 void GameOver::OnTimer(wxTimerEvent & event)
 {
 	sec++;
-	if (sec == 3) {
+	if (sec == 7) {
 		timer->Stop();
 		parentFrame->ShowMain();
 		winner = "";

@@ -43,8 +43,13 @@ void Game::InitComponent()
 	this->boardPanel->Show(false);
 	this->boxSizer->Add(boardPanel, 1, wxEXPAND, 0);
 
+	bgmmain = new wxSound("MAIN_BGM", true);
+	bgmover = new wxSound("WIN_SONG", true);
+
 	SetSizer(boxSizer);
 	ShowMain();
+
+
 }
 
 void Game::ShowMain()
@@ -53,6 +58,8 @@ void Game::ShowMain()
 	this->overPanel->Show(false);
 	this->choosePanel->Show(false);
 	this->boardPanel->Show(false);
+	bgmover->Stop();
+	bgmmain->Play(wxSOUND_ASYNC|wxSOUND_LOOP);
 
 	fitWindowSize();
 }
@@ -65,7 +72,7 @@ void Game::ShowOver(wxString winner)
 	this->overPanel->Show(true);
 	this->choosePanel->Show(false);
 	this->boardPanel->Show(false);
-
+	bgmover->Play();
 	fitWindowSize();
 }
 
@@ -76,7 +83,7 @@ void Game::ShowChoose()
 	this->overPanel->Show(false);
 	this->choosePanel->Show(true);
 	this->boardPanel->Show(false);
-
+	
 	fitWindowSize();
 }
 
@@ -89,6 +96,8 @@ void Game::ShowBoard(wxVector <int> choosen, int mode)
 	this->choosePanel->Show(false);
 	this->boardPanel->Show(true);
 	this->boardPanel->SetFocusFromKbd();
+	bgmmain->Stop();
+	bgmover->Stop();
 
 
 	fitWindowSize();
@@ -100,4 +109,6 @@ Game::~Game()
 	delete overPanel;
 	delete choosePanel;
 	delete boardPanel;
+	delete bgmmain;
+	delete bgmover;
 }

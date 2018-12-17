@@ -1,4 +1,5 @@
 #pragma once
+#include <wx/sound.h>
 #include "wx\wx.h"
 
 class MainMenu;
@@ -15,6 +16,8 @@ private:
 	ChooseTank* choosePanel;
 	Board* boardPanel;
 	void fitWindowSize();
+	wxSound *bgmmain=nullptr;
+	wxSound *bgmover = nullptr;
 
 public:
 	Game(const wxString& title);
