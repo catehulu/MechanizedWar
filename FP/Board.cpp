@@ -17,6 +17,8 @@ Board::Board(Game *parent) :
 	SetBackgroundColour(wxColour(*wxWHITE));
 	map = new Map(0, 1000, 1920, 15);
 	imgpic = new wxBitmap(wxBITMAP_PNG(#131));
+	shoot = new wxSound("SHOOT", true);
+	shotsound = new wxSound("SHOT_HIT", true);
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Bind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
@@ -55,10 +57,12 @@ void Board::OnPaint(wxPaintEvent & event)
 			if (i == turn || tanks[i] == nullptr)
 				continue;
 			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy(), tanks[turn]->getEquiped())) {
+				shotsound->Play(wxSOUND_ASYNC);
 				if (rand() % 4 == 0) {
 					tanks[i]->specialEvent(tanks[turn]->getWeapon()->getDmg());
 				}
 				if (tanks[i]->changeHealth(tanks[turn]->getWeapon()->getDmg())) {
+					
 					if (!tanks[i]->GetDirection())
 						team1--;
 					else {
@@ -89,6 +93,7 @@ void Board::OnPaint(wxPaintEvent & event)
 			t++;
 		}
 		else {
+
 			if (team1 == 0) {
 				GameOver("Team 1");
 			}
@@ -171,6 +176,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			if (special == 0)
 				tanks[turn]->specialEvent(0);
 			Shooting(tanks[turn], tanks[turn]->GetDirection());
+			shoot->Play(wxSOUND_ASYNC);
 			break;
 		default:
 			event.Skip();
@@ -357,6 +363,8 @@ Board::~Board()
 		obstacle.pop_back();
 	}
 
+	delete shoot;
+	delete shotsound;
 	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
 	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);

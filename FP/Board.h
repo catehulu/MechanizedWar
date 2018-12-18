@@ -3,6 +3,7 @@
 #include "Tank.h"
 #include "Map.h"
 #include "Weapon.h"
+#include "wx/sound.h"
 #include "Tiger_1.h"
 #include "Tiger_2.h"
 #include "Panther.h"
@@ -47,5 +48,8 @@ private:
 	int t;
 	int stages; //terdiri dari 3 stages, moving,aiming,shooting
 	Game* parentFrame;
+	wxSound *shoot = nullptr;
+	wxSound *shotsound = nullptr;
+
 };
 
