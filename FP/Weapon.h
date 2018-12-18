@@ -8,6 +8,7 @@ class Weapon
 public:
 	Weapon(double v,int x,int y,int angle, double height);//default constructor weapon
 	void Draw(wxBufferedPaintDC &dc);//gambar peluru
+	virtual void DrawImpact(wxBufferedPaintDC &dc) = 0;
 	void Move(bool direction,int t);//pergerakan peluru memakai rumus parabola
 	int getX();
 	int getY();
@@ -28,6 +29,8 @@ public:
 	~Weapon();
 protected:
 	wxImage img;
+	double impactX;
+	double impactY;
 private:
 	double tx;//posisi x temporary senjata
 	double ty;//posisi y temporary senjata

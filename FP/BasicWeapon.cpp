@@ -11,6 +11,13 @@ BasicWeapon::BasicWeapon(int v, int x, int y, int angle, double height) :
 	setDmg(20);
 }
 
+void BasicWeapon::DrawImpact(wxBufferedPaintDC & dc)
+{
+	dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	dc.SetPen(wxPen(wxColor(*wxRED), 1, wxPENSTYLE_SOLID));
+	dc.DrawCircle(wxPoint(impactX, impactY), 5);
+}
+
 BasicWeapon::~BasicWeapon()
 {
 }

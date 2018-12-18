@@ -69,4 +69,5 @@ void Building::draw(wxBufferedPaintDC & dc)
 Building::~Building()
 {
 	delete building;
+	wxMessageOutputDebug().Printf("Delete commence");
 }

@@ -19,6 +19,8 @@ GameOver::GameOver(Game* parent) :
 
 GameOver::~GameOver()
 {
+	delete gaameover;
+	delete timer;
 }
 
 void GameOver::OnClick(wxMouseEvent & event)

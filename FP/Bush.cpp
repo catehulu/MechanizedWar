@@ -31,4 +31,5 @@ void Bush::draw(wxBufferedPaintDC & dc)
 Bush::~Bush()
 {
 	delete bush;
+	wxMessageOutputDebug().Printf("Delete commence");
 }

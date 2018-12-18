@@ -19,16 +19,13 @@ Sherman::Sherman(int x, int y, bool direction)
 	tgun.Rescale(38, 4, wxIMAGE_QUALITY_HIGH);
 	//inisialisasi senajata
 	armoury.push_back(new BasicWeapon(30, gunx, guny, angle, tgun.GetHeight()));
-	armoury.push_back(new SniperWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 	armoury.push_back(new ExplosiveWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 
 	armoury[0]->setDmg(armoury[0]->getDmg() + damage);
 	armoury[1]->setDmg(armoury[1]->getDmg() + damage);
-	armoury[2]->setDmg(armoury[2]->getDmg() + damage);
 
 	ammo[0] = 100;
 	ammo[1] = 20;
-	ammo[2] = 10;
 
 	weapon = armoury[0];
 	SetBodyImage(tbody);

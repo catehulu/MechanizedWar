@@ -17,7 +17,7 @@ MainMenu::MainMenu(Game* parent) :
 
 MainMenu::~MainMenu()
 {
-
+	delete mainmenu;
 }
 
 void MainMenu::OnClick(wxMouseEvent & event)

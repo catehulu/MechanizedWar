@@ -8,6 +8,6 @@ public:
 	virtual bool intersect(int x, int y) = 0;
 	virtual bool healthChange(int dmg) = 0;
 	virtual void draw(wxBufferedPaintDC &dc) = 0;
-	~Obstacle();
+	virtual ~Obstacle();
 };
 

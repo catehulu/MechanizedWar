@@ -64,6 +64,8 @@ void Weapon::Move(bool direction, int t)
 
 	tx = this->x + x_changes;
 	ty = this->y - y_changes;
+	impactX = tx;
+	impactY = ty;
 }
 
 int Weapon::getX()

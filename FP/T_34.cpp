@@ -20,16 +20,13 @@ T_34::T_34(int x, int y, bool direction)
 
 	//inisialisasi senajata
 	armoury.push_back(new BasicWeapon(30, gunx, guny, angle, tgun.GetHeight()));
-	armoury.push_back(new SniperWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 	armoury.push_back(new ExplosiveWeapon(30, gunx, guny, angle, tgun.GetHeight()));
 
 	armoury[0]->setDmg(armoury[0]->getDmg() + damage);
 	armoury[1]->setDmg(armoury[1]->getDmg() + damage);
-	armoury[2]->setDmg(armoury[2]->getDmg() + damage);
 
 	ammo[0] = 100;
 	ammo[1] = 20;
-	ammo[2] = 10;
 
 	weapon = armoury[0];
 	SetBodyImage(tbody);
@@ -39,9 +36,9 @@ T_34::T_34(int x, int y, bool direction)
 	this->x = x;
 }
 
-void T_34::specialEvent(int choose)
+void T_34::specialEvent(int damage)
 {
-	if (damage < 5)
+	if (damage <= 5)
 		return;
 	currhealth += damage/2;
 

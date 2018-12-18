@@ -13,7 +13,7 @@ void Map::Draw(wxBufferedPaintDC &dc,int count,int stages)
 	dc.SetPen(wxPen(wxColor(*wxGREEN), 1, wxPENSTYLE_SOLID));
 	dc.DrawBitmap(this->jalan, wxPoint(this->x, this->y), true);
 	//dc.DrawRectangle(wxPoint(this->x, this->y), wxSize(this->width, this->height));
-	if (stages == 3)
+	if (stages > 2)
 		return;
 	wxFont font(40, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	wxString x;

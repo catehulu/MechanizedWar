@@ -5,7 +5,6 @@
 #include "Weapon.h"
 #include "wx/graphics.h"
 #include "BasicWeapon.h"
-#include "SniperWeapon.h"
 #include "ExplosiveWeapon.h"
 #include "resource.h"
 #include "Obstacle.h"
@@ -49,7 +48,7 @@ protected:
 	double y;
 	Weapon *weapon;
 	wxVector <Weapon* > armoury;
-	int ammo[3];
+	int ammo[2];
 	int equipedWeapon = 0;
 	int height,width;
 	double speed;

@@ -4,10 +4,7 @@
 
 Tank::Tank(int gunx, int guny)
 	:gunx(gunx), guny(guny)
-{	
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
+{
 	apicon = wxBitmap(wxBITMAP_PNG(#132)).ConvertToImage();
 	heicon = wxBitmap(wxBITMAP_PNG(#133)).ConvertToImage();
 
@@ -124,7 +121,7 @@ void Tank::DrawCurrentWeapon(wxBufferedPaintDC & dc)
 	case 0:
 		tmp = apicon;
 		break;
-	case 2:
+	case 1:
 		tmp = heicon;
 		break;
 	default:
@@ -138,6 +135,7 @@ void Tank::DrawCurrentWeapon(wxBufferedPaintDC & dc)
 	dc.DrawBitmap(tmp, wxPoint(10, 100));
 	dc.DrawText(ammo, wxPoint(70, 100));
 }
+
 
 void Tank::Move(int maxX, bool direction, wxVector<Obstacle*> obstacle)
 {
@@ -226,11 +224,11 @@ bool Tank::checkCollisionObstacle(Obstacle* obstalce)
 
 bool Tank::tankArea(int x, int y,int weapon)
 {
-	if (weapon == 2) {
-		for (int i = 0; i < 6; i++)
+	if (weapon == 1) {
+		for (int i = 0; i < 12; i++)
 		{
-			wxMessageOutputDebug().Printf("cek %d : %d",i,x - 60 + 20 *i);
-			if ((x - 60 + 20 * i >= this->x && x - 60 + 20 * i <= this->x + this->width)
+			wxMessageOutputDebug().Printf("cek %d : %d",i,x - 120 + 10 *i);
+			if ((x - 120 + 10 * i >= this->x && x - 120 + 10 * i <= this->x + this->width)
 				&& (y >= this->y && y <= this->y + this->width))
 				return true;
 		}
@@ -295,7 +293,11 @@ void Tank::initiateShooting()
 
 Tank::~Tank()
 {
-	delete weapon;
+	while (!armoury.empty())
+	{
+		delete armoury.back();
+		armoury.pop_back();
+	}
 }
 
 int Tank::getX()

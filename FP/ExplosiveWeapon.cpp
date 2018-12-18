@@ -11,6 +11,13 @@ ExplosiveWeapon::ExplosiveWeapon(int v, int x, int y, int angle, double height) 
 	setDmg(10);
 }
 
+void ExplosiveWeapon::DrawImpact(wxBufferedPaintDC & dc)
+{
+	dc.SetBrush(wxBrush(wxColour(*wxRED)));
+	dc.SetPen(wxPen(wxColor(*wxRED), 1, wxPENSTYLE_SOLID));
+	dc.DrawCircle(wxPoint(impactX, impactY), 60);
+}
+
 ExplosiveWeapon::~ExplosiveWeapon()
 {
 }

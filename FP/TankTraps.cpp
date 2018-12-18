@@ -4,8 +4,6 @@
 
 TankTraps::TankTraps(int x, int y)
 {
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
 	traps1 = wxBitmap(wxBITMAP_PNG(#128)).ConvertToImage();
 	traps2 = wxBitmap(wxBITMAP_PNG(#129)).ConvertToImage();
 	traps3 = wxBitmap(wxBITMAP_PNG(#130)).ConvertToImage();
@@ -55,4 +53,6 @@ void TankTraps::draw(wxBufferedPaintDC & dc)
 
 TankTraps::~TankTraps()
 {
+	delete tanktraps;
+	wxMessageOutputDebug().Printf("Delete commence");
 }

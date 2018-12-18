@@ -24,6 +24,7 @@ public:
 	Board(Game *parent);
 	void OnPaint(wxPaintEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
+	void OnKeyUp(wxKeyEvent& event);
 	void OnTimer(wxTimerEvent& event);
 	void OnTimeRender(wxTimerEvent& event);
 	void Moving(Tank* tank, bool direction);
@@ -37,6 +38,8 @@ private:
 	int mode;
 	int team1;
 	int team2;
+	int anim = 0;
+	int press = 0;
 	wxTimer *timer;
 	wxTimer *timer2;
 	wxVector <Tank*> tanks;
@@ -50,6 +53,10 @@ private:
 	Game* parentFrame;
 	wxSound *shoot = nullptr;
 	wxSound *shotsound = nullptr;
+	wxSound *movesound = nullptr;
+	wxSound *stopsound = nullptr;
+	wxSound *hehit = nullptr;
+	wxSound *nothit = nullptr;
 
 };
 

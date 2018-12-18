@@ -19,8 +19,13 @@ Board::Board(Game *parent) :
 	imgpic = new wxBitmap(wxBITMAP_PNG(#131));
 	shoot = new wxSound("SHOOT", true);
 	shotsound = new wxSound("SHOT_HIT", true);
+	movesound = new wxSound("ENGINE_START", true);
+	stopsound = new wxSound("ENGINE_STOP", true);
+	hehit = new wxSound("HE_HIT", true);
+	nothit = new wxSound("SHOT_UNHIT", true);
 	Bind(wxEVT_PAINT, &Board::OnPaint, this);
 	Bind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
+	Bind(wxEVT_KEY_UP, &Board::OnKeyUp, this);
 	Bind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
 	Bind(wxEVT_TIMER, &Board::OnTimeRender, this, TIMER2_ID);
 }
@@ -57,7 +62,10 @@ void Board::OnPaint(wxPaintEvent & event)
 			if (i == turn || tanks[i] == nullptr)
 				continue;
 			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy(), tanks[turn]->getEquiped())) {
-				shotsound->Play(wxSOUND_ASYNC);
+				if(tanks[turn]->getEquiped() == 0)
+					shotsound->Play(wxSOUND_ASYNC);
+				else
+					hehit->Play(wxSOUND_ASYNC);
 				if (rand() % 4 == 0) {
 					tanks[i]->specialEvent(tanks[turn]->getWeapon()->getDmg());
 				}
@@ -103,20 +111,35 @@ void Board::OnPaint(wxPaintEvent & event)
 		//inisialisasi setelah proses menembak selesai
 			else {
 				t = 0;
-				stages = 1;
+				stages = 4;
 				counter = 0;
-				turn++;
-				timer->Start(1000);
-				if (turn == tanks.size())
-					turn = 0;
-				while (tanks[turn] == nullptr) {
-					turn++;
-					if (turn == tanks.size())
-						turn = 0;
-				}
+				if (tanks[turn]->getEquiped() == 0)
+					nothit->Play(wxSOUND_ASYNC);
+				else
+					hehit->Play(wxSOUND_ASYNC);
+				
 			}
 		}
 	}
+	if (stages == 4) {
+		tanks[turn]->getWeapon()->DrawImpact(pdc);
+		if (anim == 3) {
+			anim = 0;
+			t = 0;
+			stages = 1;
+			counter = 0;
+			turn++;
+			timer->Start(1000);
+			if (turn == tanks.size())
+				turn = 0;
+			while (tanks[turn] == nullptr) {
+				turn++;
+				if (turn == tanks.size())
+					turn = 0;
+			}
+		}
+	}
+
 }
 
 void Board::OnKeyDown(wxKeyEvent & event)
@@ -133,10 +156,12 @@ void Board::OnKeyDown(wxKeyEvent & event)
 		case 'a':
 		case 'A':
 			Moving(tanks[turn], false);
+			if (press == 0)movesound->Play(wxSOUND_ASYNC);
 			break;
 		case 'd':
 		case 'D':
 			Moving(tanks[turn], true);
+			if (press == 0)movesound->Play(wxSOUND_ASYNC);
 			break;
 		case WXK_SPACE:
 			stages++;
@@ -167,7 +192,7 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			tanks[turn]->changeWeapon(1);
 			break;
 		case '2':
-			tanks[turn]->changeWeapon(3);
+			tanks[turn]->changeWeapon(2);
 			break;
 		case WXK_SPACE:
 			stages++;
@@ -183,12 +208,22 @@ void Board::OnKeyDown(wxKeyEvent & event)
 			break;
 		}
 	}
+	press = 1;
+}
+void Board::OnKeyUp(wxKeyEvent & event)
+{
+	if (stages == 1)
+		stopsound->Play(wxSOUND_ASYNC);
+	press = 0;
 }
 void Board::OnTimer(wxTimerEvent & event)
 {
 	if (stages == 3) {
 		counter = 0;
-		timer->Stop();
+	}
+	if (stages == 4) {
+		counter = 0;
+		anim++;
 	}
 	if (counter == 10)
 	{
@@ -365,6 +400,9 @@ Board::~Board()
 
 	delete shoot;
 	delete shotsound;
+	delete movesound;
+	delete stopsound;
+
 	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
 	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
