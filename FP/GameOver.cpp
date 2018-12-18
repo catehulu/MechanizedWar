@@ -40,7 +40,7 @@ void GameOver::OnPaint(wxPaintEvent & event)
 	wxFont font(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	pdc.SetFont(font);
 	pdc.SetTextForeground((wxColor(*wxBLACK)));
-	pdc.DrawText(winner, wxPoint(771, 541));
+	pdc.DrawText(winner, wxPoint(910, 541));
 
 }
 

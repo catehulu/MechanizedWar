@@ -20,5 +20,5 @@ void Map::Draw(wxBufferedPaintDC &dc,int count,int stages)
 	x << count;
 	dc.SetFont(font);
 	dc.SetTextForeground(wxColour(221, 34, 34));
-	dc.DrawText(x, wxPoint(10, 10));
+	dc.DrawText(x, wxPoint(940, 10));
 }

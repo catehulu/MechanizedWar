@@ -64,7 +64,7 @@ void Board::OnPaint(wxPaintEvent & event)
 			else if (tanks[i]->tankArea(tanks[turn]->getWeapon()->getTx(), tanks[turn]->getWeapon()->getTy(), tanks[turn]->getEquiped())) {
 				if(tanks[turn]->getEquiped() == 0)
 					shotsound->Play(wxSOUND_ASYNC);
-				else
+				else if(tanks[turn]->getEquiped() == 1)
 					hehit->Play(wxSOUND_ASYNC);
 				if (rand() % 4 == 0) {
 					tanks[i]->specialEvent(tanks[turn]->getWeapon()->getDmg());
@@ -113,9 +113,9 @@ void Board::OnPaint(wxPaintEvent & event)
 				t = 0;
 				stages = 4;
 				counter = 0;
-				if (tanks[turn]->getEquiped() == 0)
+				if (tanks[turn]->getEquiped() == 0 && hit == 1)
 					nothit->Play(wxSOUND_ASYNC);
-				else
+				else if(hit == 1)
 					hehit->Play(wxSOUND_ASYNC);
 				
 			}
@@ -123,7 +123,7 @@ void Board::OnPaint(wxPaintEvent & event)
 	}
 	if (stages == 4) {
 		tanks[turn]->getWeapon()->DrawImpact(pdc);
-		if (anim == 3) {
+		if (anim == 2) {
 			anim = 0;
 			t = 0;
 			stages = 1;
@@ -402,7 +402,8 @@ Board::~Board()
 	delete shotsound;
 	delete movesound;
 	delete stopsound;
-
+	delete nothit;
+	delete hehit;
 	Unbind(wxEVT_PAINT, &Board::OnPaint, this);
 	Unbind(wxEVT_KEY_DOWN, &Board::OnKeyDown, this);
 	Unbind(wxEVT_TIMER, &Board::OnTimer, this, TIMER1_ID);
