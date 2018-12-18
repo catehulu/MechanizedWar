@@ -13,9 +13,6 @@ T_34::T_34(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 30;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#112)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#113)).ConvertToImage();
 	tbody.Rescale(93, 39, wxIMAGE_QUALITY_HIGH);

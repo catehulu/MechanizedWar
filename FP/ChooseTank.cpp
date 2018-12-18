@@ -4,8 +4,6 @@
 ChooseTank::ChooseTank(Game* parent) :
 	wxPanel(parent, wxID_ANY), parentFrame(parent)
 {
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
 	wxImage temp = wxBitmap(wxBITMAP_PNG(#119)).ConvertToImage();
 	temp.Rescale(1920, 1080, wxIMAGE_QUALITY_HIGH);
 	choosetank = new wxBitmap(temp);

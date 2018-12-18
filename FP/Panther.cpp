@@ -13,9 +13,6 @@ Panther::Panther(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 40;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#114)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#115)).ConvertToImage();
 	tbody.Rescale(114, 49, wxIMAGE_QUALITY_HIGH);

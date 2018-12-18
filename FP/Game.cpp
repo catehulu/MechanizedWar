@@ -19,6 +19,8 @@ Game::Game(const wxString& title)
 	/*wxStatusBar *sb = CreateStatusBar();
 	sb->SetStatusText(wxT("0"));*/
 
+	wxImageHandler* pngload = new wxPNGHandler();
+	wxImage::AddHandler(pngload);
 	this->InitComponent();
 
 }

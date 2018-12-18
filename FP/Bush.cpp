@@ -8,8 +8,6 @@ Bush::Bush(int x, int y)
 	this->x = x;
 	this->y = y;
 	bush = new wxRect(x, y, 100, 40);
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
 	bushes = wxBitmap(wxBITMAP_PNG(#137)).ConvertToImage();
 	bushes.Rescale(100, 40, wxIMAGE_QUALITY_HIGH);
 }

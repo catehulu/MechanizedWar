@@ -13,9 +13,6 @@ KV_2::KV_2(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 65;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#108)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#109)).ConvertToImage();
 	tbody.Rescale(122, 64, wxIMAGE_QUALITY_HIGH);

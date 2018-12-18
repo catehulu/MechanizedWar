@@ -13,9 +13,6 @@ Pershing::Pershing(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 60;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#104)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#105)).ConvertToImage();
 	tbody.Rescale(109, 45, wxIMAGE_QUALITY_HIGH);

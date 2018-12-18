@@ -13,9 +13,6 @@ Tiger_1::Tiger_1(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 45;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#106)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#107)).ConvertToImage();
 	tbody.Rescale(107, 49, wxIMAGE_QUALITY_HIGH);

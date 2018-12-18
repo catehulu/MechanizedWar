@@ -13,9 +13,6 @@ Sherman::Sherman(int x, int y, bool direction)
 	equipedWeapon = 0;
 	damage = 30;
 
-	wxImageHandler* pngload = new wxPNGHandler();
-	wxImage::AddHandler(pngload);
-
 	wxImage tbody = wxBitmap(wxBITMAP_PNG(#110)).ConvertToImage();
 	wxImage tgun = wxBitmap(wxBITMAP_PNG(#111)).ConvertToImage();
 	tbody.Rescale(103, 45, wxIMAGE_QUALITY_HIGH);

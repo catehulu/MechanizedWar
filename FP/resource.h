@@ -39,6 +39,7 @@
 #define CATHE_2                         135
 #define CATHE_3                         136
 #define BUSHES                          137
+#define JALAN							138
 
 // Next default values for new objects
 // 
